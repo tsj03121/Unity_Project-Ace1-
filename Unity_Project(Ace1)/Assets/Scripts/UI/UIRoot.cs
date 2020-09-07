@@ -11,17 +11,23 @@ public class UIRoot : MonoBehaviour
     [SerializeField]
     Text resultUI;
 
+    [SerializeField]
+    Text stageLevelUI;
+
     // Start is called before the first frame update
     void Start()
     {
         scoreUI.gameObject.SetActive(false);
         resultUI.gameObject.SetActive(false);
+        stageLevelUI.gameObject.SetActive(false);
     }
 
     public void OnGameStarted()
     {
         scoreUI.gameObject.SetActive(true);
+        stageLevelUI.gameObject.SetActive(true);
         scoreUI.text = string.Format("Score: {0}", 0);
+        stageLevelUI.text = "Stage 1";
     }
 
     public void OnScoreChanged(int score)
@@ -33,5 +39,10 @@ public class UIRoot : MonoBehaviour
     {
         resultUI.gameObject.SetActive(true);
         resultUI.text = isVictory ? "You Win!" : "You Lose";
+    }
+
+    public void OnStageUp(int stageLevel)
+    {
+        stageLevelUI.text = "Stage " + stageLevel.ToString();
     }
 }

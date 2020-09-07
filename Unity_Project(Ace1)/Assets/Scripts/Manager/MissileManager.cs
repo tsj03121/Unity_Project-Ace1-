@@ -10,10 +10,10 @@ public class MissileManager : MonoBehaviour
 
     bool isInitialized = false;
 
-    int maxMissileCount = 20;
+    int maxMissileCount = 2;
     int currentMissileCount;
 
-    float missileSpawnInterval = 0.5f;
+    float missileSpawnInterval = 2f;
 
     Coroutine spawningMissile;
 
@@ -117,5 +117,15 @@ public class MissileManager : MonoBehaviour
         {
             missileFactory.Restore(missile);
         }
+    }
+
+    public void OnGameStageUp(int stageLevle)
+    {
+        StopCoroutine(spawningMissile);
+        currentMissileCount = 0;
+        maxMissileCount = stageLevle * 2;
+        missileSpawnInterval = 2f / stageLevle;
+        spawningMissile = StartCoroutine(AutoSpawnMissile());
+        Debug.Log("Stage count : " + maxMissileCount + ", missleinterval : " + missileSpawnInterval);
     }
 }

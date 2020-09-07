@@ -91,4 +91,12 @@ public class BulletLauncher : MonoBehaviour
     {
         isGameStarted = false;
     }
+
+    public void OnAttackSpeedUp()
+    {
+        if (fireDelay <= 0.1f)
+            return;
+
+        fireDelay -= 0.1f;
+    }
 }

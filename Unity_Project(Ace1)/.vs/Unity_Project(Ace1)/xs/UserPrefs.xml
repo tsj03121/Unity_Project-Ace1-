@@ -1,23 +1,29 @@
 ﻿<Properties StartupConfiguration="{4AE97BEE-04D3-FAF8-6A8D-52BB0E833EEC}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Manager/AudioManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Factory/ItemFactory.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameManager.cs" Line="109" Column="6" />
-      <File FileName="Assets/Scripts/BulletLauncher.cs" Line="88" Column="31" />
-      <File FileName="Assets/Scripts/IGameController.cs" Line="4" Column="1" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="70" Column="54" />
+      <File FileName="Assets/Scripts/BulletLauncher.cs" Line="95" Column="32" />
+      <File FileName="Assets/Scripts/IGameController.cs" Line="9" Column="1" />
       <File FileName="Assets/Scripts/MouseGameController.cs" Line="27" Column="2" />
       <File FileName="Assets/Scripts/KeyGameController.cs" Line="14" Column="37" />
-      <File FileName="Assets/Scripts/Bullet/Bullet.cs" Line="10" Column="1" />
-      <File FileName="Assets/Scripts/RecycleObject.cs" Line="11" Column="46" />
-      <File FileName="Assets/Scripts/Factory.cs" Line="43" Column="17" />
-      <File FileName="Assets/Scripts/Building/Building.cs" Line="36" Column="10" />
-      <File FileName="Assets/Scripts/Manager/BuildingManager.cs" Line="88" Column="1" />
+      <File FileName="Assets/Scripts/Bullet/Bullet.cs" Line="33" Column="32" />
+      <File FileName="Assets/Scripts/RecycleObject.cs" Line="14" Column="51" />
+      <File FileName="Assets/Scripts/Factory.cs" Line="29" Column="11" />
+      <File FileName="Assets/Scripts/Building/Building.cs" Line="24" Column="1" />
+      <File FileName="Assets/Scripts/Manager/BuildingManager.cs" Line="55" Column="6" />
       <File FileName="Assets/Scripts/Manager/TimeManager.cs" Line="26" Column="1" />
-      <File FileName="Assets/Scripts/Enemy/Missile.cs" Line="44" Column="28" />
-      <File FileName="Assets/Scripts/Manager/MissileManager.cs" Line="118" Column="45" />
-      <File FileName="Assets/Scripts/Manager/ScoreManager.cs" Line="33" Column="37" />
-      <File FileName="Assets/Scripts/UI/UIRoot.cs" Line="34" Column="45" />
-      <File FileName="Assets/Scripts/Audio/AudioStorage.cs" Line="31" Column="30" />
-      <File FileName="Assets/Scripts/Manager/AudioManager.cs" Line="7" Column="1" />
+      <File FileName="Assets/Scripts/Enemy/Missile.cs" Line="46" Column="1" />
+      <File FileName="Assets/Scripts/Manager/MissileManager.cs" Line="25" Column="50" />
+      <File FileName="Assets/Scripts/Manager/ScoreManager.cs" Line="33" Column="9" />
+      <File FileName="Assets/Scripts/UI/UIRoot.cs" Line="27" Column="44" />
+      <File FileName="Assets/Scripts/Audio/AudioStorage.cs" Line="22" Column="25" />
+      <File FileName="Assets/Scripts/Manager/AudioManager.cs" Line="25" Column="6" />
+      <File FileName="Assets/Scripts/Manager/StageManager.cs" Line="9" Column="9" />
+      <File FileName="Assets/Scripts/Factory/ItemFactory.cs" Line="16" Column="62" />
+      <File FileName="Assets/Scripts/Factory/Item.cs" Line="10" Column="34" />
+      <File FileName="Assets/Scripts/Item/AttackSpeedItem.cs" Line="29" Column="1" />
+      <File FileName="Assets/Scripts/Effect/Explosion.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Manager/ItemManager.cs" Line="9" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -29,10 +35,13 @@
                 <Node name="Building" expanded="True" />
                 <Node name="Bullet" expanded="True" />
                 <Node name="Controller" expanded="True" />
+                <Node name="Effect" expanded="True" />
                 <Node name="Enemy" expanded="True" />
-                <Node name="Manager" expanded="True">
-                  <Node name="AudioManager.cs" selected="True" />
+                <Node name="Factory" expanded="True">
+                  <Node name="ItemFactory.cs" selected="True" />
                 </Node>
+                <Node name="Item" expanded="True" />
+                <Node name="Manager" expanded="True" />
                 <Node name="UI" expanded="True" />
               </Node>
             </Node>

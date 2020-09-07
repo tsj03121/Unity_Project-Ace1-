@@ -73,14 +73,19 @@
     <Compile Include="Assets\Scripts\Effect\DestroyEffect.cs" />
     <Compile Include="Assets\Scripts\Effect\Explosion.cs" />
     <Compile Include="Assets\Scripts\Enemy\Missile.cs" />
-    <Compile Include="Assets\Scripts\Factory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Factory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Item.cs" />
+    <Compile Include="Assets\Scripts\Factory\ItemFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\RecycleObject.cs" />
+    <Compile Include="Assets\Scripts\Item\AttackSpeedItem.cs" />
     <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Manager\BuildingManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\ItemManager.cs" />
     <Compile Include="Assets\Scripts\Manager\MissileManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\StageManager.cs" />
     <Compile Include="Assets\Scripts\Manager\TimeManager.cs" />
-    <Compile Include="Assets\Scripts\RecycleObject.cs" />
     <Compile Include="Assets\Scripts\UI\UIRoot.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/ace-noone/Unity/Unity_Project(Ace1)/Unity_Project(Ace1)/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

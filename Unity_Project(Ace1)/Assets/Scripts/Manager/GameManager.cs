@@ -25,10 +25,13 @@ public class GameManager : MonoBehaviour
     DestroyEffect effectPrefab;
 
     [SerializeField]
-    int maxMissileCount = 20;
+    AttackSpeedItem attackSpeedItemPrefab;
 
     [SerializeField]
-    float missileSpawnInterval = 0.5f;
+    int maxMissileCount = 2;
+
+    [SerializeField]
+    float missileSpawnInterval = 2f;
 
     [SerializeField]
     int scorePerMissile = 50;
@@ -48,6 +51,8 @@ public class GameManager : MonoBehaviour
     TimeManager timeManager;
     MissileManager missileManager;
     ScoreManager scoreManager;
+    StageManager stageManager;
+    ItemManager itemManager;
 
     // Start is called before the first frame update
     void Start()
@@ -59,8 +64,11 @@ public class GameManager : MonoBehaviour
         buildingManager = new BuildingManager(buildingPrefab, buildingLocators, new Factory(effectPrefab, 2));
         timeManager = gameObject.AddComponent<TimeManager>();
         missileManager = gameObject.AddComponent<MissileManager>();
+        stageManager = new StageManager();
         missileManager.Initialize(new Factory(missilePrefab), buildingManager, maxMissileCount, missileSpawnInterval);
         scoreManager = new ScoreManager(scorePerMissile, scorePerBuilding);
+        itemManager = new ItemManager(new ItemFactory(attackSpeedItemPrefab));
+
 
         BindEvents();
 
@@ -76,8 +84,13 @@ public class GameManager : MonoBehaviour
         timeManager.GameStarted += uIRoot.OnGameStarted;
         missileManager.MissileDestroyed += scoreManager.OnMissileDestroyed;
         missileManager.AllMissilesDestroyed += OnAllMissileDestroyed;
+        missileManager.AllMissilesDestroyed += stageManager.OnAllMissilesDestroyed;
         scoreManager.ScoreChanged += uIRoot.OnScoreChanged;
         buildingManager.AllBuildingsDestroyed += OnAllBuildingDestroyed;
+        stageManager.StageUp += missileManager.OnGameStageUp;
+        stageManager.StageUp += uIRoot.OnStageUp;
+        
+
 
         GameEnded += launcher.OnGameEnded;
         GameEnded += missileManager.OnGameEnded;
@@ -94,8 +107,11 @@ public class GameManager : MonoBehaviour
         timeManager.GameStarted -= uIRoot.OnGameStarted;
         missileManager.MissileDestroyed -= scoreManager.OnMissileDestroyed;
         missileManager.AllMissilesDestroyed -= OnAllMissileDestroyed;
+        missileManager.AllMissilesDestroyed -= stageManager.OnAllMissilesDestroyed;
         scoreManager.ScoreChanged -= uIRoot.OnScoreChanged;
         buildingManager.AllBuildingsDestroyed -= OnAllBuildingDestroyed;
+        stageManager.StageUp -= missileManager.OnGameStageUp;
+        stageManager.StageUp -= uIRoot.OnStageUp;
 
         GameEnded -= launcher.OnGameEnded;
         GameEnded -= missileManager.OnGameEnded;
@@ -118,7 +134,10 @@ public class GameManager : MonoBehaviour
 
     void OnAllMissileDestroyed()
     {
-        StartCoroutine(DelayedGameEnded());
+        if(stageManager.GetStageLevel() == 11)
+        {
+            StartCoroutine(DelayedGameEnded());
+        } 
     }
 
     IEnumerator DelayedGameEnded()
