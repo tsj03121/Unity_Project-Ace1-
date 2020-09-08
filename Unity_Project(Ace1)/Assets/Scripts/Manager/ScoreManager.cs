@@ -5,23 +5,23 @@ using System;
 
 public class ScoreManager
 {
-    readonly int scorePerMissile;
-    readonly int scorePerBuilding;
+    readonly int scorePerMissile_;
+    readonly int scorePerBuilding_;
 
-    int score;
+    int score_;
 
     public Action<int> ScoreChanged;
 
     public ScoreManager(int scorePerMissile = 50, int scorePerBuilding = 5000)
     {
-        this.scorePerMissile = scorePerMissile;
-        this.scorePerBuilding = scorePerBuilding;
+        scorePerMissile_ = scorePerMissile;
+        scorePerBuilding_ = scorePerBuilding;
     }
 
-    public void OnMissileDestroyed()
+    public void OnMissileDestroyed(RecycleObject missile)
     {
-        score += scorePerMissile;
-        ScoreChanged?.Invoke(score);
+        score_ += scorePerMissile_;
+        ScoreChanged?.Invoke(score_);
     }
 
     public void OnGameEnded(bool isVictory, int buildingCount)
@@ -29,8 +29,26 @@ public class ScoreManager
         if (buildingCount == 0)
             return;
 
-        score += scorePerBuilding * buildingCount;
-        ScoreChanged?.Invoke(score);
+        score_ += scorePerBuilding_ * buildingCount;
+        ScoreChanged?.Invoke(score_);
+    }
+
+    public void OnAddBuildingScore()
+    {
+        Debug.Log("Score 증가! " + scorePerBuilding_);
+        score_ += scorePerBuilding_;
+    }
+
+    public void OnMaxItem(int score)
+    {
+        Debug.Log("Score 증가! " + score);
+        score_ += score;
+    }
+
+    public void OnBossClearScore(int score)
+    {
+        Debug.Log("Score 증가! : " + score);
+        score_ += score;
     }
 
 }

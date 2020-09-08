@@ -45,12 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6708fe5ac34f0457385dd34dc7e23e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 6122346922952613099, guid: 651b6f1764bf34090a97b5f954e1ae0f,
+  bulletPrefab_: {fileID: 6122346922952613099, guid: 651b6f1764bf34090a97b5f954e1ae0f,
     type: 3}
-  explosionPrefab: {fileID: 6233695216854531373, guid: f8d05e5b9c57548f2b8287fa0cae4357,
+  explosionPrefab_: {fileID: 6233695216854531373, guid: f8d05e5b9c57548f2b8287fa0cae4357,
     type: 3}
-  firePosition: {fileID: 4059354259732623092}
-  fireDelay: 0.5
+  firePosition_: {fileID: 4059354259732623092}
+  fireDelay_: 0.5
 --- !u!1 &6048687719629556008
 GameObject:
   m_ObjectHideFlags: 0

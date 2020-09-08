@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    public static AudioManager instance_;
 
     [SerializeField]
-    AudioStorage soundStorage;
+    AudioStorage soundStorage_;
 
     void Awake()
     {
-        if (instance == null)
+        if (instance_ == null)
         {
-            instance = this;
+            instance_ = this;
         }
         else
         {
@@ -23,6 +23,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(SoundId id)
     { 
-        AudioSource.PlayClipAtPoint(soundStorage.Get(id), Vector3.zero);
+        AudioSource.PlayClipAtPoint(soundStorage_.Get(id), Vector3.zero);
     }
 }

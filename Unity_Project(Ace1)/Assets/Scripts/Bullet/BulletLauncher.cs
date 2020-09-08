@@ -1,102 +1,133 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BulletLauncher : MonoBehaviour
 {
     [SerializeField]
-    Bullet bulletPrefab;
+    Bullet bulletPrefab_;
 
     [SerializeField]
-    Explosion explosionPrefab;
+    Explosion explosionPrefab_;
 
     [SerializeField]
-    Transform firePosition;
+    Transform firePosition_;
 
     [SerializeField]
-    float fireDelay = 0.5f;
-    float elapsedFireTime;
-    bool canShoot = true;
+    float fireDelay_ = 0.5f;
+    float elapsedFireTime_;
+    float bulletMoveSpeedChange_ = 5;
+    bool canShoot_ = true;
 
-    bool isGameStarted = false;
+    bool isGameStarted_ = false;
 
-    Factory bulletFactory;
-    Factory explosionFactory;
+    Factory bulletFactory_;
+    Factory explosionFactory_;
+
+    public Action<int> MaxItem;
 
     void Start()
     {
-        bulletFactory = new Factory(bulletPrefab);
-        explosionFactory = new Factory(explosionPrefab);
+        bulletFactory_ = new Factory(bulletPrefab_);
+        explosionFactory_ = new Factory(explosionPrefab_);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isGameStarted)
+        if (!isGameStarted_)
             return;
 
-        if (!canShoot)
+        if (!canShoot_)
         {
-            elapsedFireTime += Time.deltaTime;
-            if (elapsedFireTime >= fireDelay)
+            elapsedFireTime_ += Time.deltaTime;
+            if (elapsedFireTime_ >= fireDelay_)
             {
-                canShoot = true;
-                elapsedFireTime = 0f;
+                canShoot_ = true;
+                elapsedFireTime_ = 0f;
             }
         }
     }
 
     public void OnFireButtonPressed(Vector3 position)
     {
-        if (!isGameStarted)
+        if (!isGameStarted_)
             return;
 
-        if (!canShoot)
+        if (!canShoot_)
             return;
 
-        RecycleObject bullet = bulletFactory.Get();
-        bullet.Activate(firePosition.position, position);
-        bullet.Destroyed += OnBulletDestroyed;
-      
-        AudioManager.instance.PlaySound(SoundId.Shoot);
+        RecycleObject bulletRecycle = bulletFactory_.Get();
+        bulletRecycle.Activate(firePosition_.position, position);
+        bulletRecycle.Destroyed += OnBulletDestroyed;
 
-        canShoot = false;
+        Bullet bullet = (Bullet)bulletRecycle;
+        bullet.SetMoveSpeed(bulletMoveSpeedChange_);
+     
+        AudioManager.instance_.PlaySound(SoundId.Shoot);
+
+        canShoot_ = false;
     }
 
     void OnBulletDestroyed(RecycleObject usedBullet)
     {
         Vector3 lastBulletPosition = usedBullet.transform.position;
         usedBullet.Destroyed -= OnBulletDestroyed;
-        bulletFactory.Restore(usedBullet);
+        bulletFactory_.Restore(usedBullet);
 
-        RecycleObject explosion = explosionFactory.Get();
+        RecycleObject explosion = explosionFactory_.Get();
         explosion.Activate(lastBulletPosition);
         explosion.Destroyed += OnExplosionDestroyed;
 
-        AudioManager.instance.PlaySound(SoundId.BulletExplosion);
+        AudioManager.instance_.PlaySound(SoundId.BulletExplosion);
     }
 
     void OnExplosionDestroyed(RecycleObject usedExplosion)
     {
         usedExplosion.Destroyed -= OnExplosionDestroyed;
-        explosionFactory.Restore(usedExplosion);
+        explosionFactory_.Restore(usedExplosion);
     }
 
     public void OnGameStarted()
     {
-        isGameStarted = true;
+        isGameStarted_ = true;
     }
 
     public void OnGameEnded(bool isVictory, int buildingCount)
     {
-        isGameStarted = false;
+        isGameStarted_ = false;
     }
 
-    public void OnAttackSpeedUp()
+    public void OnItemDestroyed(Item item)
     {
-        if (fireDelay <= 0.1f)
-            return;
+        switch (item.GetType().ToString())
+        {
+            case "AttackSpeedUpItem":
+            {
+                if (fireDelay_ <= 0.1f)
+                {
+                    int itemScore = item.GetMaxItemScore();
+                    MaxItem?.Invoke(itemScore);
+                    return;
+                }
+                 
+                fireDelay_ -= 0.1f;
+                break;
+            }
 
-        fireDelay -= 0.1f;
+            case "AttackMoveSpeedUpItem":
+            {
+                if (bulletMoveSpeedChange_ >= 10)
+                {
+                    int itemScore = item.GetMaxItemScore();
+                    MaxItem?.Invoke(itemScore);
+                    return;
+                }
+
+                bulletMoveSpeedChange_ += 1;
+                break;
+            }
+        }
     }
 }

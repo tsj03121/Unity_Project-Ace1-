@@ -4,38 +4,38 @@ using UnityEngine;
 
 public class ItemFactory
 {
-    List<Item> pool = new List<Item>();
-    int defaultPoolSize;
-    Item prefab;
+    List<Item> pool_ = new List<Item>();
+    int defaultPoolSize_;
+    Item prefab_;
 
     public ItemFactory(Item prefab, int defaultPoolSize = 3)
     {
-        this.prefab = prefab;
-        this.defaultPoolSize = defaultPoolSize;
+        prefab_ = prefab;
+        defaultPoolSize_ = defaultPoolSize;
 
-        Debug.Assert(this.prefab != null, "Prefab is null!");
+        Debug.Assert(prefab_ != null, "Prefab is null!");
     }
 
     void CreatePool()
     {
-        for (int i = 0; i < defaultPoolSize; ++i)
+        for (int i = 0; i < defaultPoolSize_; ++i)
         {
-            Item obj = GameObject.Instantiate(prefab) as Item;
+            Item obj = GameObject.Instantiate(prefab_) as Item;
             obj.gameObject.SetActive(false);
-            pool.Add(obj);
+            pool_.Add(obj);
         }
     }
 
     public Item Get()
     {
-        if (pool.Count == 0)
+        if (pool_.Count == 0)
         {
             CreatePool();
         }
 
-        int lastIndex = pool.Count - 1;
-        Item obj = pool[lastIndex];
-        pool.RemoveAt(lastIndex);
+        int lastIndex = pool_.Count - 1;
+        Item obj = pool_[lastIndex];
+        pool_.RemoveAt(lastIndex);
         obj.gameObject.SetActive(true);
         return obj;
     }
@@ -44,6 +44,6 @@ public class ItemFactory
     {
         Debug.Assert(obj != null, "Null object to be returned!");
         obj.gameObject.SetActive(false);
-        pool.Add(obj);
+        pool_.Add(obj);
     }
 }

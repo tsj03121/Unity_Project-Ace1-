@@ -5,23 +5,26 @@ using System;
 
 public class Item : MonoBehaviour
 {
-    protected bool isActivated = false;
+    [SerializeField]
+    protected BoxCollider2D box_;
+    protected Rigidbody2D body_;
+
+    [SerializeField]
+    protected float moveSpeed_ = 2;
+    protected float bottomY_;
+    protected bool isActivated_ = false;
+    protected bool isFirstExplosion_ = false;
 
     public Action<Item> Destroyed;
     public Action<Item> OutOfScreen;
-    protected Vector3 targetPosition;
 
-    public virtual void Activate(Vector3 position)
+    public void SetIsFirstExplosion() { isFirstExplosion_ = true; }
+    public virtual int GetMaxItemScore() { return 0; }
+
+    public virtual void Activate(RecycleObject missile)
     {
-        isActivated = true;
-        transform.position = position;
-    }
-    public virtual void Activate(Vector3 startPosition, Vector3 targetPosition)
-    {
-        transform.position = startPosition;
-        this.targetPosition = targetPosition;
-        Vector3 dir = (targetPosition - startPosition).normalized;
-        transform.rotation = Quaternion.LookRotation(transform.forward, dir);
-        isActivated = true;
+        isActivated_ = true;
+        transform.position = missile.transform.position;
+        transform.rotation = missile.transform.rotation;
     }
 }

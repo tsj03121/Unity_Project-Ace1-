@@ -5,8 +5,8 @@ using UnityEngine;
 public class DestroyEffect : RecycleObject
 {
     [SerializeField]
-    float effectTime = 0.5f;
-    float elapsedTime = 0f;
+    float effectTime_ = 0.5f;
+    float elapsedTime_ = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,14 +17,14 @@ public class DestroyEffect : RecycleObject
     // Update is called once per frame
     void Update()
     {
-        if (!isActivated)
+        if (!isActivated_)
             return;
 
-        elapsedTime += Time.deltaTime;
-        if (elapsedTime >= effectTime)
+        elapsedTime_ += Time.deltaTime;
+        if (elapsedTime_ >= effectTime_)
         {
-            elapsedTime = 0;
-            isActivated = false;
+            elapsedTime_ = 0;
+            isActivated_ = false;
 
             Destroyed?.Invoke(this);
         }

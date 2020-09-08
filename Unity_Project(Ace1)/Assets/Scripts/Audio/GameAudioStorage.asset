@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 884e8250aa14a474a903eb17944414a8, type: 3}
   m_Name: GameAudioStorage
   m_EditorClassIdentifier: 
-  soundSrcs:
-  - soundFile: {fileID: 8300000, guid: f3a8076f6a970454fb79ba1736eb7c82, type: 3}
-    soundId: 0
-  - soundFile: {fileID: 8300000, guid: c189e2381dcd74086b2acc3b5183e898, type: 3}
-    soundId: 1
-  - soundFile: {fileID: 8300000, guid: c189e2381dcd74086b2acc3b5183e898, type: 3}
-    soundId: 2
-  - soundFile: {fileID: 8300000, guid: e84d0d0d0d085416f9538cc22a14bd50, type: 3}
-    soundId: 3
+  soundSrcs_:
+  - soundFile_: {fileID: 8300000, guid: f3a8076f6a970454fb79ba1736eb7c82, type: 3}
+    soundId_: 0
+  - soundFile_: {fileID: 8300000, guid: c189e2381dcd74086b2acc3b5183e898, type: 3}
+    soundId_: 1
+  - soundFile_: {fileID: 8300000, guid: ec1d725e566244e63b7936d6403991a9, type: 3}
+    soundId_: 2
+  - soundFile_: {fileID: 8300000, guid: e84d0d0d0d085416f9538cc22a14bd50, type: 3}
+    soundId_: 3

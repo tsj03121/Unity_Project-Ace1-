@@ -6,31 +6,31 @@ using System;
 [RequireComponent(typeof(CircleCollider2D), typeof(Rigidbody2D))]
 public class Explosion : RecycleObject
 {
-    CircleCollider2D circle;
-    Rigidbody2D body;
+    CircleCollider2D circle_;
+    Rigidbody2D body_;
 
     [SerializeField]
-    float timeToRemove = 1f;
-    float elapsedTime = 0f;
+    float timeToRemove_ = 1f;
+    float elapsedTime_ = 0f;
 
     void Awake()
     {
-        circle = GetComponent<CircleCollider2D>();
-        body = GetComponent<Rigidbody2D>();
+        circle_ = GetComponent<CircleCollider2D>();
+        body_ = GetComponent<Rigidbody2D>();
 
-        circle.isTrigger = true;
-        body.bodyType = RigidbodyType2D.Kinematic;
+        circle_.isTrigger = true;
+        body_.bodyType = RigidbodyType2D.Kinematic;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isActivated)
+        if (isActivated_)
         {
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime >= timeToRemove)
+            elapsedTime_ += Time.deltaTime;
+            if (elapsedTime_ >= timeToRemove_)
             {
-                elapsedTime = 0;
+                elapsedTime_ = 0;
                 DestroySelf();
             }
         }
@@ -38,7 +38,7 @@ public class Explosion : RecycleObject
 
     void DestroySelf()
     {
-        isActivated = false;
+        isActivated_ = false;
         Destroyed?.Invoke(this);
     }
 }

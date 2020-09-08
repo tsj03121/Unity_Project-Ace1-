@@ -1,46 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D))]
 public class Missile : RecycleObject
 {
-    BoxCollider2D box;
-    Rigidbody2D body;
+    BoxCollider2D box_;
+    Rigidbody2D body_;
 
     [SerializeField]
-    float moveSpeed = 3f;
+    float moveSpeed_ = 3f;
 
-    float bottomY;
+    float bottomY_;
+
+    public Action<RecycleObject> BuildingDestroyed;
 
     void Awake()
     {
-        box = GetComponent<BoxCollider2D>();
-        body = GetComponent<Rigidbody2D>();
+        box_ = GetComponent<BoxCollider2D>();
+        body_ = GetComponent<Rigidbody2D>();
 
-        body.bodyType = RigidbodyType2D.Kinematic;
-        box.isTrigger = true;
+        body_.bodyType = RigidbodyType2D.Kinematic;
+        box_.isTrigger = true;
     }
 
     void Start()
     {
         Vector3 bottomPosition = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
-        bottomY = bottomPosition.y - box.size.y;
+        bottomY_ = bottomPosition.y - box_.size.y;
     }
 
     void DestroySelf()
     {
-        isActivated = false;
+        isActivated_ = false;
         Destroyed?.Invoke(this);
+    }
+
+    void BuildingDestroyedSelf()
+    {
+        isActivated_ = false;
+        BuildingDestroyed?.Invoke(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isActivated)
+        if (!isActivated_)
             return;
 
-        transform.position += transform.up * moveSpeed * Time.deltaTime;
+        transform.position += transform.up * moveSpeed_ * Time.deltaTime;
         CheckOutOfScreen();
     }
 
@@ -48,7 +57,7 @@ public class Missile : RecycleObject
     {
         if (collision.GetComponent<Building>() != null)
         {
-            DestroySelf();
+            BuildingDestroyedSelf();
             return;
         }
 
@@ -61,9 +70,9 @@ public class Missile : RecycleObject
 
     void CheckOutOfScreen()
     {
-        if (transform.position.y < bottomY)
+        if (transform.position.y < bottomY_)
         {
-            isActivated = false;
+            isActivated_ = false;
             OutOfScreen?.Invoke(this);
         }
     }

@@ -5,15 +5,15 @@ using System;
 
 public class TimeManager : MonoBehaviour
 {
-    bool isGameStarted = false;
+    bool isGameStarted_ = false;
     public Action GameStarted;
 
     public void StartGame(float timeToStart = 3f)
     {
-        if (isGameStarted)
+        if (isGameStarted_)
             return;
 
-        isGameStarted = true;
+        isGameStarted_ = true;
         StartCoroutine(DelayedGameStart(timeToStart));
     }
 

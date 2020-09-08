@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Audio\AudioStorage.cs" />
+    <Compile Include="Assets\Scripts\Boss\Boss.cs" />
+    <Compile Include="Assets\Scripts\Boss\BossAttack.cs" />
     <Compile Include="Assets\Scripts\Building\Building.cs" />
     <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
     <Compile Include="Assets\Scripts\Bullet\BulletLauncher.cs" />
@@ -73,12 +75,16 @@
     <Compile Include="Assets\Scripts\Effect\DestroyEffect.cs" />
     <Compile Include="Assets\Scripts\Effect\Explosion.cs" />
     <Compile Include="Assets\Scripts\Enemy\Missile.cs" />
+    <Compile Include="Assets\Scripts\Factory\BuildingFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\Factory.cs" />
     <Compile Include="Assets\Scripts\Factory\Item.cs" />
     <Compile Include="Assets\Scripts\Factory\ItemFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\RecycleObject.cs" />
-    <Compile Include="Assets\Scripts\Item\AttackSpeedItem.cs" />
+    <Compile Include="Assets\Scripts\Item\AttackMoveSpeedUpItem.cs" />
+    <Compile Include="Assets\Scripts\Item\AttackSpeedUpItem.cs" />
+    <Compile Include="Assets\Scripts\Item\HpUpItem.cs" />
     <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\BossManager.cs" />
     <Compile Include="Assets\Scripts\Manager\BuildingManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ItemManager.cs" />

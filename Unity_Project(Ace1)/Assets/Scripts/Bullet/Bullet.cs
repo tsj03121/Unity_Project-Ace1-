@@ -6,19 +6,22 @@ using System;
 public class Bullet : RecycleObject
 {
     [SerializeField]
-    float moveSpeed = 5f;
+    float moveSpeed_;
+
+    public void SetMoveSpeed(float speed) { moveSpeed_ = speed; }
+    public float GetMoveSpeed() { return moveSpeed_; }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isActivated)
+        if (!isActivated_)
             return;
 
-        transform.position += transform.up * moveSpeed * Time.deltaTime;
+        transform.position += transform.up * moveSpeed_ * Time.deltaTime;
 
         if(IsArrivedToTarget())
         {
-            isActivated = false;
+            isActivated_ = false;
 
             if(Destroyed != null)
             {
@@ -29,7 +32,7 @@ public class Bullet : RecycleObject
 
     bool IsArrivedToTarget()
     {
-        float distance = Vector3.Distance(transform.position, targetPosition);
+        float distance = Vector3.Distance(transform.position, targetPosition_);
         return distance < 0.1f;
     }
 }

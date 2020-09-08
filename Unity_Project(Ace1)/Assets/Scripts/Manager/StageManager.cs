@@ -6,15 +6,30 @@ using System;
 public class StageManager
 {
     [SerializeField]
-    int stageLevel = 1;
+    int stageLevel_ = 9;
 
     public Action<int> StageUp;
+    public Action EndedStage;
 
-    public int GetStageLevel() { return stageLevel; }
+    public int GetStageLevel() { return stageLevel_; }
 
     public void OnAllMissilesDestroyed()
     {
-        stageLevel += 1;
-        StageUp?.Invoke(stageLevel);
+        AddStageLevel();
+    }
+
+    public void OnBossClear()
+    {
+        AddStageLevel();
+    }
+
+    void AddStageLevel()
+    {
+        stageLevel_ += 1;
+        StageUp?.Invoke(stageLevel_);
+        if (stageLevel_ == 11)
+        {
+            EndedStage?.Invoke();
+        }
     }
 }

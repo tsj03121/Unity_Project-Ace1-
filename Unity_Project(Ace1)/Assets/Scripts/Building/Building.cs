@@ -6,26 +6,14 @@ using System;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Building : MonoBehaviour
 {
-    BoxCollider2D box;
+    BoxCollider2D box_;
 
     public Action<Building> Destroyed;
 
     void Awake()
     {
-        box = GetComponent<BoxCollider2D>();
-        box.isTrigger = true;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        box_ = GetComponent<BoxCollider2D>();
+        box_.isTrigger = true;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

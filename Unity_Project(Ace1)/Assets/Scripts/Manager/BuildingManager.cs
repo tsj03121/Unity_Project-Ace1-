@@ -5,67 +5,68 @@ using System;
 
 public class BuildingManager
 {
-    Building prefab;
-    Transform[] buildingLocators;
-    Factory effectFactory;
+    Transform[] buildingLocators_;
+    Factory effectFactory_;
+    BuildingFactory buildingFactory_;
 
-    List<Building> buildings = new List<Building>();
+    List<Building> buildings_ = new List<Building>();
 
-    public int BuildingCount { get { return buildings.Count; } }
+    public int BuildingCount { get { return buildings_.Count; } }
+    public Transform[] GetBuildingLocators() { return buildingLocators_; }
 
     public bool HasBuilding
     {
         get
         {
-            return buildings.Count > 0;
+            return buildings_.Count > 0;
         }
     }
 
     public Action AllBuildingsDestroyed;
+    public Action AddBuildingScore;
 
-    public BuildingManager(Building prefab, Transform[] buildingLocators, Factory effectFactory)
+    public BuildingManager(BuildingFactory buildingFactory, Transform[] buildingLocators, Factory effectFactory)
     {
-        this.prefab = prefab;
-        this.buildingLocators = buildingLocators;
-        this.effectFactory = effectFactory;
+        buildingLocators_ = buildingLocators;
+        effectFactory_ = effectFactory;
+        buildingFactory_ = buildingFactory;
 
-        Debug.Assert(this.prefab != null, "null building prefab!");
-        Debug.Assert(this.buildingLocators != null, "null buildingLocators!");
+        Debug.Assert(buildingLocators_ != null, "null buildingLocators!");
     }
 
     void CreateBuildings()
     {
-        if (buildings.Count > 0)
+        if (buildings_.Count > 0)
         {
             Debug.LogWarning("Buildings have been already Created!");
             return;
         }
 
-        for (int i = 0; i < buildingLocators.Length; ++i)
+        for (int i = 0; i < buildingLocators_.Length; ++i)
         {
-            Building building = GameObject.Instantiate(prefab);
-            building.transform.position = buildingLocators[i].position;
+            Building building = buildingFactory_.Get();
+            building.transform.position = buildingLocators_[i].position;
             building.Destroyed += OnBuildingDestroyed;
-            buildings.Add(building);
+            buildings_.Add(building);
         }
 
     }
 
     void OnBuildingDestroyed(Building building)
     {
-        AudioManager.instance.PlaySound(SoundId.BuildingExplosion);
+        AudioManager.instance_.PlaySound(SoundId.BuildingExplosion);
 
         Vector3 lastPosition = building.transform.position;
         building.Destroyed -= OnBuildingDestroyed;
-        int index = buildings.IndexOf(building);
-        buildings.RemoveAt(index);
-        GameObject.Destroy(building.gameObject);
+        int index = buildings_.IndexOf(building);
+        buildings_.RemoveAt(index);
+        buildingFactory_.Restore(building);
 
-        RecycleObject effect = effectFactory.Get();
+        RecycleObject effect = effectFactory_.Get();
         effect.Activate(lastPosition);
         effect.Destroyed += OnEffectDestroyed;
 
-        if (buildings.Count == 0)
+        if (buildings_.Count == 0)
         {
             AllBuildingsDestroyed?.Invoke();
         }
@@ -74,7 +75,7 @@ public class BuildingManager
     void OnEffectDestroyed(RecycleObject effect)
     {
         effect.Destroyed -= OnEffectDestroyed;
-        effectFactory.Restore(effect);
+        effectFactory_.Restore(effect);
     }
 
     public void OnGameStarted()
@@ -84,8 +85,28 @@ public class BuildingManager
 
     public Vector3 GetRandomBuildingPosition()
     {
-        Building building = buildings[UnityEngine.Random.Range(0, buildings.Count)];
+        Building building = buildings_[UnityEngine.Random.Range(0, buildings_.Count)];
         return building.transform.position;
     }
 
+    public void OnItemDestroyed(Item item)
+    {
+        switch (item.GetType().ToString())
+        {
+            case "HpUpItem":
+            {
+                Debug.Log(buildings_.Count);
+                if (BuildingCount == 4)
+                {
+                    AddBuildingScore?.Invoke();
+                    break;
+                }
+
+                Building building = buildingFactory_.Get();
+                building.Destroyed += OnBuildingDestroyed;
+                buildings_.Add(building);
+                break;
+            }
+        }
+    }
 }

@@ -7,28 +7,28 @@ using System;
 public class AudioStorage : ScriptableObject
 {
     [SerializeField]
-    SoundSrc[] soundSrcs;
+    SoundSrc[] soundSrcs_;
 
-    Dictionary<SoundId, AudioClip> dicSounds = new Dictionary<SoundId, AudioClip>();
+    Dictionary<SoundId, AudioClip> dicSounds_ = new Dictionary<SoundId, AudioClip>();
 
     void GenerateDictionary()
     {
-        for (int i = 0; i < soundSrcs.Length; ++i)
+        for (int i = 0; i < soundSrcs_.Length; ++i)
         {
-            dicSounds.Add(soundSrcs[i].Id, soundSrcs[i].SoundFile);
+            dicSounds_.Add(soundSrcs_[i].Id, soundSrcs_[i].SoundFile);
         }
     }
 
     public AudioClip Get(SoundId id)
     {
-        Debug.Assert(soundSrcs.Length > 0, "No soundSource Data!");
+        Debug.Assert(soundSrcs_.Length > 0, "No soundSource Data!");
 
-        if (dicSounds.Count == 0)
+        if (dicSounds_.Count == 0)
         {
             GenerateDictionary();
         }
 
-        return dicSounds[id];
+        return dicSounds_[id];
     }
 }
 
@@ -36,13 +36,13 @@ public class AudioStorage : ScriptableObject
 public struct SoundSrc
 {
     [SerializeField]
-    AudioClip soundFile;
+    AudioClip soundFile_;
 
     [SerializeField]
-    SoundId soundId;
+    SoundId soundId_;
 
-    public AudioClip SoundFile { get { return soundFile; } }
-    public SoundId Id { get { return soundId; } }
+    public AudioClip SoundFile { get { return soundFile_; } }
+    public SoundId Id { get { return soundId_; } }
 }
 
 public enum SoundId
