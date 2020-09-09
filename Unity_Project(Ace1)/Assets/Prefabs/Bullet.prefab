@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f68ae05e55f4a87bd2dabdf849b03d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  spriteRenderer: {fileID: 2386209797095935283}
+  moveSpeed_: 0
 --- !u!1 &2386209797095935286
 GameObject:
   m_ObjectHideFlags: 0

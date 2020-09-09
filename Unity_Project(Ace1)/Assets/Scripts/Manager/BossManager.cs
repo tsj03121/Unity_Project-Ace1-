@@ -5,39 +5,53 @@ using System;
 
 public class BossManager : MonoBehaviour
 {
-    Boss prefab_;
+    Boss boss;
     BossAttack bossAttack_;
-    ScoreManager scoreManager_;
     MissileManager missileManager_;
     Transform target_;
-    
-    public Action BossClear;
 
-    public void Initialize(Boss prefab, ScoreManager scoreManager, MissileManager missileManager, Transform target)
+    public Action<int> BossClear;
+
+    public void Initialize(Boss prefab, MissileManager missileManager, Transform target)
     {
-        prefab_ = prefab;
-        scoreManager_ = scoreManager;
+        boss = prefab;
         missileManager_ = missileManager;
         target_ = target;
     }
 
-    void BossCreate()
+    void BindEvents()
     {
-        Boss boss = GameObject.Instantiate(prefab_) as Boss;
-        bossAttack_ = boss.gameObject.AddComponent<BossAttack>();
-        bossAttack_.Initialize(missileManager_, target_);
         bossAttack_.BossPatternDoubleAttack += missileManager_.OnBossPatternDoubleAttack;
         bossAttack_.BossPatternCircleAttack += missileManager_.OnBossCircleAttack;
+        bossAttack_.BossPatternFanShapeAttack += missileManager_.OnBossPatternFanShapeAttack;
+
         boss.BossClear += OnBossClear;
+    }
+
+    void UnBindEvents()
+    {
+        bossAttack_.BossPatternDoubleAttack -= missileManager_.OnBossPatternDoubleAttack;
+        bossAttack_.BossPatternCircleAttack -= missileManager_.OnBossCircleAttack;
+        bossAttack_.BossPatternFanShapeAttack -= missileManager_.OnBossPatternFanShapeAttack;
+
+        boss.BossClear -= OnBossClear;
+    }
+
+    void BossCreate()
+    {
+        boss = GameObject.Instantiate(boss) as Boss;
+        bossAttack_ = boss.gameObject.AddComponent<BossAttack>();
+        bossAttack_.Initialize(missileManager_, target_);
+
+        BindEvents();
     }
 
     void OnBossClear(Boss boss)
     {
-        bossAttack_.BossPatternDoubleAttack -= missileManager_.OnBossPatternDoubleAttack;
-        bossAttack_.BossPatternCircleAttack -= missileManager_.OnBossCircleAttack;
-        boss.BossClear -= OnBossClear;
-        Destroy(boss.gameObject);
-        BossClear?.Invoke();
+        UnBindEvents();
+        BossClear?.Invoke(boss.GetBossClearScore());
+
+        Destroy(boss.gameObject);        
     }
 
     public void OnStageUp(int stage)

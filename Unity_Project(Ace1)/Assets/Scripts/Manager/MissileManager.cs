@@ -9,6 +9,7 @@ public class MissileManager : MonoBehaviour
     BuildingManager buildingManager_;
 
     bool isInitialized_ = false;
+    bool isBossPartternAttack = false;
 
     int maxMissileCount_ = 2;
     int currentMissileCount_;
@@ -16,6 +17,7 @@ public class MissileManager : MonoBehaviour
     float missileSpawnInterval_ = 2f;
 
     Coroutine spawningMissile_;
+    
 
     List<RecycleObject> missiles_ = new List<RecycleObject>();
 
@@ -37,6 +39,22 @@ public class MissileManager : MonoBehaviour
         isInitialized_ = true;
     }
 
+    void BindEvents(RecycleObject missileRecycle)
+    {
+        missileRecycle.Destroyed += OnMissileDestroyed;
+        missileRecycle.OutOfScreen += OnMissileOutOfScreen;
+        Missile missile = (Missile)missileRecycle;
+        missile.BuildingDestroyed += OnMissileBuildingDestroyed;
+    }
+
+    void UnBindEvents(RecycleObject missileRecycle)
+    {
+        missileRecycle.Destroyed -= OnMissileDestroyed;
+        missileRecycle.OutOfScreen -= OnMissileOutOfScreen;
+        Missile missile = (Missile)missileRecycle;
+        missile.BuildingDestroyed -= OnMissileBuildingDestroyed;
+    }
+
     void SpawnMissile()
     {
         Debug.Assert(this.missileFactory_ != null, "missile factory is null!");
@@ -44,10 +62,9 @@ public class MissileManager : MonoBehaviour
 
         RecycleObject missileRecycle = missileFactory_.Get();
         missileRecycle.Activate(GetMissileSpawnPosition(), buildingManager_.GetRandomBuildingPosition());
-        missileRecycle.Destroyed += OnMissileDestroyed;
-        missileRecycle.OutOfScreen += OnMissileOutOfScreen;
-        Missile missile = (Missile)missileRecycle;
-        missile.BuildingDestroyed += OnMissileBuildingDestroyed;
+
+        BindEvents(missileRecycle);
+
         missiles_.Add(missileRecycle);
 
         currentMissileCount_++;
@@ -73,10 +90,9 @@ public class MissileManager : MonoBehaviour
 
     void RestoreMissile(RecycleObject missileRecycle)
     {
-        missileRecycle.Destroyed -= OnMissileDestroyed;
-        missileRecycle.OutOfScreen -= OnMissileOutOfScreen;
+        UnBindEvents(missileRecycle);
+
         Missile missile = (Missile)missileRecycle;
-        missile.BuildingDestroyed -= OnMissileBuildingDestroyed;
         int index = missiles_.IndexOf(missile);
         missiles_.RemoveAt(index);
         missileFactory_.Restore(missile);
@@ -198,22 +214,37 @@ public class MissileManager : MonoBehaviour
     public void OnBossCircleAttack(Transform transform)
     {
         int count = 0;
-        while (count < 40)
+        int maxCount = UnityEngine.Random.Range(20, 22);
+        while (count <= maxCount)
         {
             RecycleObject missileRecycle = missileFactory_.Get();
-            //missileRecycle.transform.Rotate(360 / count);
-            float x = Mathf.Atan2(39, count) * Mathf.Rad2Deg * 8;
-            Vector3 rotVec = Vector3.forward * x;
+            missileRecycle.transform.rotation = Quaternion.identity;
+
+            Vector3 rotVec = Vector3.forward * 360 * count / maxCount;
             missileRecycle.transform.Rotate(rotVec);
             missileRecycle.Activate(transform.position);
-            missileRecycle.Destroyed += OnMissileDestroyed;
-            missileRecycle.OutOfScreen += OnMissileOutOfScreen;
-            Missile missile = (Missile)missileRecycle;
-            missile.BuildingDestroyed += OnMissileBuildingDestroyed;
+
+            BindEvents(missileRecycle);
+
             missiles_.Add(missileRecycle);
             count += 1;
         }
-        
     }
 
+    public void OnBossPatternFanShapeAttack(float count, int maxCount)
+    {
+        RecycleObject missileRecycle = missileFactory_.Get();
+        missileRecycle.transform.rotation = Quaternion.identity;
+
+        float z = Mathf.Abs(Mathf.Cos(count / maxCount * 10f)) * 120 + 120;
+
+        Vector3 rotVec = Vector3.forward * z;
+        missileRecycle.transform.Rotate(rotVec);
+        missileRecycle.Activate(transform.position);
+
+        Debug.Log(missileRecycle.transform.position);
+
+        BindEvents(missileRecycle);
+        missiles_.Add(missileRecycle);
+    }
 }

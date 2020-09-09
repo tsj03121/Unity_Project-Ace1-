@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         itemManager_ = new ItemManager(launcher_, buildingManager_,
             new ItemFactory(attackSpeedItemPrefab_), new ItemFactory(attackMoveSpeedUpItemrefab_), new ItemFactory(hpUpItemPrefab_));
         bossManager_ = gameObject.AddComponent<BossManager>();
-        bossManager_.Initialize(bossPrefab_, scoreManager_, missileManager_, launcher_.transform);
+        bossManager_.Initialize(bossPrefab_, missileManager_, launcher_.transform);
         BindEvents();
 
         timeManager_.StartGame(1f);
@@ -89,22 +89,30 @@ public class GameManager : MonoBehaviour
     void BindEvents()
     {
         mouseGameController_.FireButtonPressed += launcher_.OnFireButtonPressed;
+
         timeManager_.GameStarted += buildingManager_.OnGameStarted;
         timeManager_.GameStarted += launcher_.OnGameStarted;
         timeManager_.GameStarted += missileManager_.OnGameStarted;
         timeManager_.GameStarted += uIRoot_.OnGameStarted;
+
         missileManager_.MissileDestroyed += scoreManager_.OnMissileDestroyed;
         missileManager_.MissileDestroyed += itemManager_.OnMissileDestroyed;
         missileManager_.AllMissilesDestroyed += stageManager_.OnAllMissilesDestroyed;
+
         scoreManager_.ScoreChanged += uIRoot_.OnScoreChanged;
+
         buildingManager_.AllBuildingsDestroyed += OnAllBuildingDestroyed;
         buildingManager_.AddBuildingScore += scoreManager_.OnAddBuildingScore;
+
         stageManager_.StageUp += missileManager_.OnStageUp;
         stageManager_.StageUp += uIRoot_.OnStageUp;
         stageManager_.StageUp += bossManager_.OnStageUp;
         stageManager_.EndedStage += OnEndedStage;
+
         launcher_.MaxItem += scoreManager_.OnMaxItem;
+
         bossManager_.BossClear += stageManager_.OnBossClear;
+        bossManager_.BossClear += scoreManager_.OnBossClearScore;
 
         GameEnded += launcher_.OnGameEnded;
         GameEnded += missileManager_.OnGameEnded;
@@ -115,21 +123,29 @@ public class GameManager : MonoBehaviour
     void UnBindEvents()
     {
         mouseGameController_.FireButtonPressed -= launcher_.OnFireButtonPressed;
+
         timeManager_.GameStarted -= buildingManager_.OnGameStarted;
         timeManager_.GameStarted -= launcher_.OnGameStarted;
         timeManager_.GameStarted -= missileManager_.OnGameStarted;
         timeManager_.GameStarted -= uIRoot_.OnGameStarted;
+
         missileManager_.MissileDestroyed -= scoreManager_.OnMissileDestroyed;
         missileManager_.MissileDestroyed -= itemManager_.OnMissileDestroyed;
         missileManager_.AllMissilesDestroyed -= stageManager_.OnAllMissilesDestroyed;
+
         scoreManager_.ScoreChanged -= uIRoot_.OnScoreChanged;
+
         buildingManager_.AllBuildingsDestroyed -= OnAllBuildingDestroyed;
+
         stageManager_.StageUp -= missileManager_.OnStageUp;
         stageManager_.StageUp -= uIRoot_.OnStageUp;
         stageManager_.StageUp -= bossManager_.OnStageUp;
         stageManager_.EndedStage -= OnEndedStage;
+
         launcher_.MaxItem -= scoreManager_.OnMaxItem;
+
         bossManager_.BossClear -= stageManager_.OnBossClear;
+        bossManager_.BossClear -= scoreManager_.OnBossClearScore;
 
         GameEnded -= launcher_.OnGameEnded;
         GameEnded -= missileManager_.OnGameEnded;

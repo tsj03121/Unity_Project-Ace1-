@@ -95,7 +95,6 @@ public class BuildingManager
         {
             case "HpUpItem":
             {
-                Debug.Log(buildings_.Count);
                 if (BuildingCount == 4)
                 {
                     AddBuildingScore?.Invoke();

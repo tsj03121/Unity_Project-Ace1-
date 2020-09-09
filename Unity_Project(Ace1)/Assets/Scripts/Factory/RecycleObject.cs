@@ -8,8 +8,13 @@ public class RecycleObject : MonoBehaviour
     protected bool isActivated_ = false;
     protected Vector3 targetPosition_;
 
+    [SerializeField]
+    protected SpriteRenderer spriteRenderer;
+
     public Action<RecycleObject> Destroyed;
     public Action<RecycleObject> OutOfScreen;
+
+    public SpriteRenderer GetSpriteRenderer() { return spriteRenderer; }
 
     public virtual void Activate(Vector3 position)
     {

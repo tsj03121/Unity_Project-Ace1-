@@ -18,7 +18,7 @@ public class StageManager
         AddStageLevel();
     }
 
-    public void OnBossClear()
+    public void OnBossClear(int num)
     {
         AddStageLevel();
     }

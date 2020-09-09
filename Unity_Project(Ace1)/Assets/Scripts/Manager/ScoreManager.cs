@@ -35,20 +35,20 @@ public class ScoreManager
 
     public void OnAddBuildingScore()
     {
-        Debug.Log("Score 증가! " + scorePerBuilding_);
         score_ += scorePerBuilding_;
+        ScoreChanged?.Invoke(score_);
     }
 
     public void OnMaxItem(int score)
     {
-        Debug.Log("Score 증가! " + score);
         score_ += score;
+        ScoreChanged?.Invoke(score_);
     }
 
     public void OnBossClearScore(int score)
     {
-        Debug.Log("Score 증가! : " + score);
         score_ += score;
+        ScoreChanged?.Invoke(score_);
     }
 
 }

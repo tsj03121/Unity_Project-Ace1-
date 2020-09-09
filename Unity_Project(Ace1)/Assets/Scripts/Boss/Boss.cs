@@ -16,6 +16,7 @@ public class Boss : MonoBehaviour
     [SerializeField]
     int bossClearScore = 10000;
 
+    public int GetBossClearScore() { return bossClearScore; }
     public void BossHit() { bossHp_ -= 1; }
 
     public Action<Boss> BossClear;
@@ -39,8 +40,6 @@ public class Boss : MonoBehaviour
                 BossClear?.Invoke(this);
                 return;
             }
-
-            Debug.Log(bossHp_);
             return;
         }
     }

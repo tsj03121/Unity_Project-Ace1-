@@ -13,6 +13,9 @@ public class Missile : RecycleObject
     float moveSpeed_ = 3f;
 
     float bottomY_;
+    float topY_;
+    float leftX_;
+    float rightX_;
 
     public Action<RecycleObject> BuildingDestroyed;
 
@@ -27,8 +30,17 @@ public class Missile : RecycleObject
 
     void Start()
     {
-        Vector3 bottomPosition = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
-        bottomY_ = bottomPosition.y - box_.size.y;
+        Vector3 position = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+        bottomY_ = position.y - box_.size.y;
+
+        position = Camera.main.ViewportToWorldPoint(new Vector2(0, 1));
+        topY_ = position.y + box_.size.y;
+
+        position = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+        leftX_ = position.x - box_.size.x;
+
+        position = Camera.main.ViewportToWorldPoint(new Vector2(1, 0));
+        rightX_ = position.x + box_.size.x;
     }
 
     void DestroySelf()
@@ -71,6 +83,24 @@ public class Missile : RecycleObject
     void CheckOutOfScreen()
     {
         if (transform.position.y < bottomY_)
+        {
+            isActivated_ = false;
+            OutOfScreen?.Invoke(this);
+        }
+
+        if (transform.position.y > topY_)
+        {
+            isActivated_ = false;
+            OutOfScreen?.Invoke(this);
+        }
+
+        if (transform.position.x < leftX_)
+        {
+            isActivated_ = false;
+            OutOfScreen?.Invoke(this);
+        }
+
+        if (transform.position.x > rightX_)
         {
             isActivated_ = false;
             OutOfScreen?.Invoke(this);

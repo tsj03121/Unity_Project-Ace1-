@@ -37,6 +37,7 @@ public class Factory
         RecycleObject obj = pool_[lastIndex];
         pool_.RemoveAt(lastIndex);
         obj.gameObject.SetActive(true);
+            
         return obj;
     }
 

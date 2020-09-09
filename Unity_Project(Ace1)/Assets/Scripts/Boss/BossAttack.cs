@@ -9,15 +9,18 @@ public class BossAttack : MonoBehaviour
     Transform target_;
 
     [SerializeField]
-    int doubleAttackCount_ = 2;
-    int bossPatternCount_ = 2;
+    int doubleAttackCount_ = 4;
+    int bossPatternCount_ = 3;
 
     Factory missileFactory_;
 
     Coroutine bossPartternCoroutine;
 
+    bool readyParttern = true;
+
     public Action BossPatternDoubleAttack;
     public Action<Transform> BossPatternCircleAttack;
+    public Action<float, int> BossPatternFanShapeAttack;
 
     public void Initialize(MissileManager missileManager, Transform target)
     {
@@ -27,7 +30,6 @@ public class BossAttack : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("BossAttackStart 1번시작");
         bossPartternCoroutine = StartCoroutine(BossAttackPattern());
     }
 
@@ -36,58 +38,87 @@ public class BossAttack : MonoBehaviour
     {
         while (gameObject != null)
         {
-            Debug.Log("BossAttackPatten 5초 후 반복");
             yield return new WaitForSeconds(1f);
-            int randomPateen = UnityEngine.Random.Range(0, bossPatternCount_);
-
-            switch (randomPateen)
+            if (readyParttern)
             {
-                case 0:
-                    {
-                        StopCoroutine(bossPartternCoroutine);
-                        StartCoroutine(DoubleAttack());
-                        break;
-                    }
+                int randomPateen = UnityEngine.Random.Range(0, bossPatternCount_);
 
-                case 1:
-                    {
-                        StopCoroutine(bossPartternCoroutine);
-                        StartCoroutine(CircleAttack());
-                        break;
-                    }
+                switch (randomPateen)
+                {
+                    case 0:
+                        {
+                            readyParttern = false;
+                            StartCoroutine(DoubleAttack());
+                            break;
+                        }
 
-                case 2:
-                    {
-                        break;
-                    }
+                    case 1:
+                        {
+                            readyParttern = false;
+                            StartCoroutine(CircleAttack());
+                            break;
+                        }
 
-            }
+                    case 2:
+                        {
+                            readyParttern = false;
+                            StartCoroutine(FanShapeAttack(40));
+                            break;
+                        }
+
+                }
+            }   
         }
     }
 
-
+    //더블샷 패턴
     IEnumerator DoubleAttack()
     {
         int count = 0;
         while (count < doubleAttackCount_)
         {
-            Debug.Log("DoubleAttack 반복");
             yield return new WaitForSeconds(1f);
 
             BossPatternDoubleAttack?.Invoke();
 
             count += 1;
-        }
 
-        bossPartternCoroutine = StartCoroutine(BossAttackPattern());
+            if (count == doubleAttackCount_)
+            {
+                readyParttern = true;
+            }
+        }
     }
 
+    //원형 패턴
     IEnumerator CircleAttack()
     {
-        Debug.Log("CircleAttack 시작");
         yield return new WaitForSeconds(1f);
 
         BossPatternCircleAttack?.Invoke(gameObject.transform);
-        bossPartternCoroutine = StartCoroutine(BossAttackPattern());
+        readyParttern = true;
+    }
+
+    //부채꼴 패턴
+    IEnumerator FanShapeAttack(int maxCount)
+    {
+        float count = 0;
+        bool isPartternAttack = true;
+
+        while (isPartternAttack)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            if (count <= maxCount)
+            {
+                BossPatternFanShapeAttack?.Invoke(count, maxCount);
+                count += 1;
+            }
+            else
+            {
+                isPartternAttack = false;
+                readyParttern = true;
+            }
+        }
     }
 }

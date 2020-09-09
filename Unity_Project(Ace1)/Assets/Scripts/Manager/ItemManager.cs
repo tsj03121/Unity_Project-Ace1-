@@ -11,9 +11,8 @@ public class ItemManager
     BulletLauncher bulletLauncher_;
     BuildingManager buildingManager_;
 
-    public Action ItemDestroyed;
-
     List<Item> items = new List<Item>();
+
 
     public ItemManager(BulletLauncher bulletLauncher, BuildingManager buildingManager, ItemFactory attackSpeedUpItemFactory, ItemFactory attackMoveSpeedUpItemFactory, ItemFactory hpUpItemFactory)
     {
@@ -31,9 +30,11 @@ public class ItemManager
             return;
 
         item.Activate(missile);
+
         item.Destroyed += OnItemDestroyed;
         item.Destroyed += bulletLauncher_.OnItemDestroyed;
         item.Destroyed += buildingManager_.OnItemDestroyed;
+
         item.OutOfScreen += OnItemOutOfScreen;
         items.Add(item);
     }
@@ -41,7 +42,6 @@ public class ItemManager
     void OnItemDestroyed(Item item)
     {
         RestoreItem(item);
-        ItemDestroyed?.Invoke();
     }
 
     void OnItemOutOfScreen(Item item)
@@ -54,7 +54,11 @@ public class ItemManager
         item.Destroyed -= OnItemDestroyed;
         item.Destroyed -= bulletLauncher_.OnItemDestroyed;
         item.Destroyed -= buildingManager_.OnItemDestroyed;
+
+        item.OutOfScreen -= OnItemOutOfScreen;
+
         int index = items.IndexOf(item);
+
         items.RemoveAt(index);
         RestoreFactoryItem(item);
     }
