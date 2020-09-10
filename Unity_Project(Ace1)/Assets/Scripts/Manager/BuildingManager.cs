@@ -11,7 +11,7 @@ public class BuildingManager
 
     List<Building> buildings_ = new List<Building>();
 
-    public int BuildingCount { get { return buildings_.Count; } }
+    public int GetBuildingCount { get { return buildings_.Count; } }
     public Transform[] GetBuildingLocators() { return buildingLocators_; }
 
     public bool HasBuilding
@@ -30,26 +30,39 @@ public class BuildingManager
         buildingLocators_ = buildingLocators;
         effectFactory_ = effectFactory;
         buildingFactory_ = buildingFactory;
-
-        Debug.Assert(buildingLocators_ != null, "null buildingLocators!");
     }
 
     void CreateBuildings()
     {
         if (buildings_.Count > 0)
         {
-            Debug.LogWarning("Buildings have been already Created!");
-            return;
+            for (int i = 0; i < buildings_.Count; ++i)
+            {
+                UnBindEvents(buildings_[i]);
+                int index = buildings_.IndexOf(buildings_[i]);
+                buildingFactory_.Restore(buildings_[i]);
+                buildings_.RemoveAt(index);
+                i -= 1;
+            }
         }
 
         for (int i = 0; i < buildingLocators_.Length; ++i)
         {
             Building building = buildingFactory_.Get();
             building.transform.position = buildingLocators_[i].position;
-            building.Destroyed += OnBuildingDestroyed;
+            BindEvents(building);
             buildings_.Add(building);
         }
+    }
 
+    void BindEvents(Building building)
+    {
+        building.Destroyed += OnBuildingDestroyed;
+    }
+
+    void UnBindEvents(Building building)
+    {
+        building.Destroyed -= OnBuildingDestroyed;
     }
 
     void OnBuildingDestroyed(Building building)
@@ -57,7 +70,7 @@ public class BuildingManager
         AudioManager.instance_.PlaySound(SoundId.BuildingExplosion);
 
         Vector3 lastPosition = building.transform.position;
-        building.Destroyed -= OnBuildingDestroyed;
+        UnBindEvents(building);
         int index = buildings_.IndexOf(building);
         buildings_.RemoveAt(index);
         buildingFactory_.Restore(building);
@@ -83,6 +96,11 @@ public class BuildingManager
         CreateBuildings();
     }
 
+    public void OnGameReStarted(int stageLevel)
+    {
+        CreateBuildings();
+    }
+
     public Vector3 GetRandomBuildingPosition()
     {
         Building building = buildings_[UnityEngine.Random.Range(0, buildings_.Count)];
@@ -95,7 +113,7 @@ public class BuildingManager
         {
             case "HpUpItem":
             {
-                if (BuildingCount == 4)
+                if (GetBuildingCount == 4)
                 {
                     AddBuildingScore?.Invoke();
                     break;

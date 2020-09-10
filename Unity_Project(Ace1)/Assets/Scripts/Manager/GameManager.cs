@@ -49,7 +49,12 @@ public class GameManager : MonoBehaviour
     int scorePerBuilding_ = 5000;
 
     [SerializeField]
+    int endStageLevel_;
+
+    [SerializeField]
     UIRoot uIRoot_;
+    UIAnimation uIAnimation_;
+
 
     bool isAllBuildingDestroyed_ = false;
 
@@ -74,13 +79,16 @@ public class GameManager : MonoBehaviour
         buildingManager_ = new BuildingManager(new BuildingFactory(buildingPrefab_), buildingLocators_, new Factory(effectPrefab_, 2));
         timeManager_ = gameObject.AddComponent<TimeManager>();
         missileManager_ = gameObject.AddComponent<MissileManager>();
-        stageManager_ = new StageManager();
-        missileManager_.Initialize(new Factory(missilePrefab_), buildingManager_, maxMissileCount_, missileSpawnInterval_);
+        stageManager_ = new StageManager(buildingManager_, endStageLevel_);
+        missileManager_.Initialize(new Factory(missilePrefab_), buildingManager_, maxMissileCount_, missileSpawnInterval_, endStageLevel_);
         scoreManager_ = new ScoreManager(scorePerMissile_, scorePerBuilding_);
         itemManager_ = new ItemManager(launcher_, buildingManager_,
             new ItemFactory(attackSpeedItemPrefab_), new ItemFactory(attackMoveSpeedUpItemrefab_), new ItemFactory(hpUpItemPrefab_));
         bossManager_ = gameObject.AddComponent<BossManager>();
         bossManager_.Initialize(bossPrefab_, missileManager_, launcher_.transform);
+        uIAnimation_ = uIRoot_.GetUIAnimation();
+        uIAnimation_.SetEndStageLevel(endStageLevel_);
+
         BindEvents();
 
         timeManager_.StartGame(1f);
@@ -89,6 +97,13 @@ public class GameManager : MonoBehaviour
     void BindEvents()
     {
         mouseGameController_.FireButtonPressed += launcher_.OnFireButtonPressed;
+
+        uIRoot_.ReStart += scoreManager_.OnGameReStarted;
+        uIRoot_.ReStart += buildingManager_.OnGameReStarted;
+        uIRoot_.ReStart += stageManager_.OnGameReStarted;
+        uIRoot_.ReStart += launcher_.OnGameReStarted;
+        uIRoot_.ReStart += missileManager_.OnGameReStarted;
+        uIRoot_.ReStart += OnGameReStarted;
 
         timeManager_.GameStarted += buildingManager_.OnGameStarted;
         timeManager_.GameStarted += launcher_.OnGameStarted;
@@ -106,6 +121,7 @@ public class GameManager : MonoBehaviour
 
         stageManager_.StageUp += missileManager_.OnStageUp;
         stageManager_.StageUp += uIRoot_.OnStageUp;
+        stageManager_.StageUp += uIAnimation_.OnStageLevelTextMove;
         stageManager_.StageUp += bossManager_.OnStageUp;
         stageManager_.EndedStage += OnEndedStage;
 
@@ -118,11 +134,20 @@ public class GameManager : MonoBehaviour
         GameEnded += missileManager_.OnGameEnded;
         GameEnded += scoreManager_.OnGameEnded;
         GameEnded += uIRoot_.OnGameEnded;
+        GameEnded += itemManager_.OnGameEnded;
+        GameEnded += bossManager_.OnGameEnded;
     }
 
     void UnBindEvents()
     {
         mouseGameController_.FireButtonPressed -= launcher_.OnFireButtonPressed;
+
+        uIRoot_.ReStart -= scoreManager_.OnGameReStarted;
+        uIRoot_.ReStart -= buildingManager_.OnGameReStarted;
+        uIRoot_.ReStart -= stageManager_.OnGameReStarted;
+        uIRoot_.ReStart -= launcher_.OnGameReStarted;
+        uIRoot_.ReStart -= missileManager_.OnGameReStarted;
+        uIRoot_.ReStart -= OnGameReStarted;
 
         timeManager_.GameStarted -= buildingManager_.OnGameStarted;
         timeManager_.GameStarted -= launcher_.OnGameStarted;
@@ -139,6 +164,7 @@ public class GameManager : MonoBehaviour
 
         stageManager_.StageUp -= missileManager_.OnStageUp;
         stageManager_.StageUp -= uIRoot_.OnStageUp;
+        stageManager_.StageUp -= uIAnimation_.OnStageLevelTextMove;
         stageManager_.StageUp -= bossManager_.OnStageUp;
         stageManager_.EndedStage -= OnEndedStage;
 
@@ -151,6 +177,8 @@ public class GameManager : MonoBehaviour
         GameEnded -= missileManager_.OnGameEnded;
         GameEnded -= scoreManager_.OnGameEnded;
         GameEnded -= uIRoot_.OnGameEnded;
+        GameEnded -= itemManager_.OnGameEnded;
+        GameEnded -= bossManager_.OnGameEnded;
     }
 
     void OnDestroy()
@@ -158,17 +186,22 @@ public class GameManager : MonoBehaviour
         UnBindEvents();    
     }
 
+    void OnGameReStarted(int stageLevel)
+    {
+        isAllBuildingDestroyed_ = false;
+    }
+
     void OnAllBuildingDestroyed()
     {
         isAllBuildingDestroyed_ = true;
-        GameEnded?.Invoke(false, buildingManager_.BuildingCount);
+        GameEnded?.Invoke(false, buildingManager_.GetBuildingCount);
 
         AudioManager.instance_.PlaySound(SoundId.GameEnd);
     }
 
     void OnEndedStage()
     {
-        if(stageManager_.GetStageLevel() == 11)
+        if(stageManager_.GetStageLevel() == endStageLevel_)
         {
             StartCoroutine(DelayedGameEnded());
         } 
@@ -180,7 +213,7 @@ public class GameManager : MonoBehaviour
 
         if (!isAllBuildingDestroyed_)
         {
-            GameEnded?.Invoke(true, buildingManager_.BuildingCount);
+            GameEnded?.Invoke(true, buildingManager_.GetBuildingCount);
             AudioManager.instance_.PlaySound(SoundId.GameEnd);
         }
     }

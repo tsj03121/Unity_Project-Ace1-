@@ -1,36 +1,38 @@
 ﻿<Properties StartupConfiguration="{4AE97BEE-04D3-FAF8-6A8D-52BB0E833EEC}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Manager/MissileManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/UIRoot.cs">
     <Files>
       <File FileName="Assets/Scripts/Bullet/Bullet.cs" Line="28" Column="24" />
-      <File FileName="Assets/Scripts/Building/Building.cs" Line="11" Column="38" />
-      <File FileName="Assets/Scripts/Manager/BuildingManager.cs" Line="96" Column="29" />
-      <File FileName="Assets/Scripts/Manager/TimeManager.cs" Line="9" Column="24" />
-      <File FileName="Assets/Scripts/Enemy/Missile.cs" Line="79" Column="20" />
-      <File FileName="Assets/Scripts/Manager/MissileManager.cs" Line="217" Column="57" />
-      <File FileName="Assets/Scripts/Manager/ScoreManager.cs" Line="45" Column="38" />
-      <File FileName="Assets/Scripts/UI/UIRoot.cs" Line="41" Column="62" />
+      <File FileName="Assets/Scripts/Building/Building.cs" />
+      <File FileName="Assets/Scripts/Manager/BuildingManager.cs" />
+      <File FileName="Assets/Scripts/Manager/TimeManager.cs" />
+      <File FileName="Assets/Scripts/Enemy/Missile.cs" />
+      <File FileName="Assets/Scripts/Manager/MissileManager.cs" />
+      <File FileName="Assets/Scripts/Manager/ScoreManager.cs" />
+      <File FileName="Assets/Scripts/UI/UIRoot.cs" Line="74" Column="1" />
       <File FileName="Assets/Scripts/Audio/AudioStorage.cs" />
       <File FileName="Assets/Scripts/Manager/AudioManager.cs" />
-      <File FileName="Assets/Scripts/Manager/StageManager.cs" Line="22" Column="6" />
-      <File FileName="Assets/Scripts/Factory/ItemFactory.cs" Line="38" Column="35" />
-      <File FileName="Assets/Scripts/Factory/Item.cs" Line="56" Column="38" />
-      <File FileName="Assets/Scripts/Effect/Explosion.cs" Line="30" Column="28" />
-      <File FileName="Assets/Scripts/Manager/ItemManager.cs" Line="54" Column="23" />
-      <File FileName="Assets/Scripts/Factory/RecycleObject.cs" Line="6" Column="16" />
-      <File FileName="Assets/Scripts/Manager/GameManager.cs" Line="85" Column="1" />
-      <File FileName="Assets/Scripts/Bullet/BulletLauncher.cs" Line="102" Column="32" />
-      <File FileName="Assets/Scripts/Effect/DestroyEffect.cs" Line="27" Column="1" />
-      <File FileName="Assets/Scripts/Controller/MouseGameController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Factory/Factory.cs" Line="39" Column="40" />
+      <File FileName="Assets/Scripts/Manager/StageManager.cs" />
+      <File FileName="Assets/Scripts/Factory/ItemFactory.cs" />
+      <File FileName="Assets/Scripts/Factory/Item.cs" />
+      <File FileName="Assets/Scripts/Effect/Explosion.cs" />
+      <File FileName="Assets/Scripts/Manager/ItemManager.cs" />
+      <File FileName="Assets/Scripts/Factory/RecycleObject.cs" />
+      <File FileName="Assets/Scripts/Manager/GameManager.cs" />
+      <File FileName="Assets/Scripts/Bullet/BulletLauncher.cs" />
+      <File FileName="Assets/Scripts/Effect/DestroyEffect.cs" />
+      <File FileName="Assets/Scripts/Controller/MouseGameController.cs" />
+      <File FileName="Assets/Scripts/Factory/Factory.cs" />
       <File FileName="Assets/Scripts/Controller/IGameController.cs" />
       <File FileName="Assets/Scripts/Controller/KeyGameController.cs" />
-      <File FileName="Assets/Scripts/Item/AttackMoveSpeedUpItem.cs" Line="52" Column="34" />
-      <File FileName="Assets/Scripts/Item/HpUpItem.cs" Line="47" Column="1" />
-      <File FileName="Assets/Scripts/Factory/BuildingFactory.cs" Line="14" Column="44" />
-      <File FileName="Assets/Scripts/Boss/Boss.cs" Line="7" Column="14" />
-      <File FileName="Assets/Scripts/Manager/BossManager.cs" Line="43" Column="43" />
-      <File FileName="Assets/Scripts/Boss/BossAttack.cs" Line="110" Column="48" />
-      <File FileName="Assets/Scripts/Item/AttackSpeedUpItem.cs" Line="53" Column="13" />
+      <File FileName="Assets/Scripts/Item/AttackMoveSpeedUpItem.cs" />
+      <File FileName="Assets/Scripts/Item/HpUpItem.cs" />
+      <File FileName="Assets/Scripts/Factory/BuildingFactory.cs" />
+      <File FileName="Assets/Scripts/Boss/Boss.cs" />
+      <File FileName="Assets/Scripts/Manager/BossManager.cs" />
+      <File FileName="Assets/Scripts/Boss/BossAttack.cs" />
+      <File FileName="Assets/Scripts/Item/AttackSpeedUpItem.cs" />
+      <File FileName="Assets/Scripts/Animation/UIAnimation.cs" />
+      <File FileName="Assets/Scripts/UI/UIDefaultFont.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -38,6 +40,7 @@
           <Node name="Unity_Project(Ace1)" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
+                <Node name="Animation" expanded="True" />
                 <Node name="Audio" expanded="True" />
                 <Node name="Boss" expanded="True" />
                 <Node name="Building" expanded="True" />
@@ -47,25 +50,20 @@
                 <Node name="Enemy" expanded="True" />
                 <Node name="Factory" expanded="True" />
                 <Node name="Item" expanded="True" />
-                <Node name="Manager" expanded="True">
-                  <Node name="MissileManager.cs" selected="True" />
+                <Node name="Manager" expanded="True" />
+                <Node name="UI" expanded="True">
+                  <Node name="UIRoot.cs" selected="True" />
                 </Node>
-                <Node name="UI" expanded="True" />
               </Node>
             </Node>
           </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="Unity_Project(Ace1)" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="76e355bb-e558-47c4-a532-bd5a768b3e81" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6f05bfe7-76ab-4f6f-9104-bfb289e4963f" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

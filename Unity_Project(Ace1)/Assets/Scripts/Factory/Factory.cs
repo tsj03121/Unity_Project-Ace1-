@@ -8,6 +8,8 @@ public class Factory
     int defaultPoolSize_;
     RecycleObject prefab_;
 
+    int sortingOrder = 0;
+
     public Factory(RecycleObject prefab, int defaultPoolSize = 5)
     {
         prefab_ = prefab;
@@ -35,6 +37,9 @@ public class Factory
 
         int lastIndex = pool_.Count - 1;
         RecycleObject obj = pool_[lastIndex];
+        SpriteRenderer spriteRenderer = obj.GetSpriteRenderer();
+        sortingOrder += 1;
+        spriteRenderer.sortingOrder = sortingOrder;
         pool_.RemoveAt(lastIndex);
         obj.gameObject.SetActive(true);
             

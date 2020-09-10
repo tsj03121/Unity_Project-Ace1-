@@ -15,9 +15,9 @@ public class BulletLauncher : MonoBehaviour
     Transform firePosition_;
 
     [SerializeField]
+    float bulletMoveSpeedChange_ = 5;
     float fireDelay_ = 0.5f;
     float elapsedFireTime_;
-    float bulletMoveSpeedChange_ = 5;
     bool canShoot_ = true;
 
     bool isGameStarted_ = false;
@@ -87,6 +87,13 @@ public class BulletLauncher : MonoBehaviour
     {
         usedExplosion.Destroyed -= OnExplosionDestroyed;
         explosionFactory_.Restore(usedExplosion);
+    }
+
+    public void OnGameReStarted(int stageLevel)
+    {
+        isGameStarted_ = true;
+        fireDelay_ = 0.5f;
+        bulletMoveSpeedChange_ = 5;
     }
 
     public void OnGameStarted()

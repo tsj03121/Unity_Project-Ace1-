@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D))]
 public class AttackSpeedUpItem : Item

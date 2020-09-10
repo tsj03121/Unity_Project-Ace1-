@@ -51,4 +51,10 @@ public class ScoreManager
         ScoreChanged?.Invoke(score_);
     }
 
+    public void OnGameReStarted(int stageLevel)
+    {
+        score_ = 0;
+        ScoreChanged?.Invoke(score_);
+    }
+
 }

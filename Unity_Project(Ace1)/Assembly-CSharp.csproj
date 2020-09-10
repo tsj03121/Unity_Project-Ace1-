@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Animation\UIAnimation.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioStorage.cs" />
     <Compile Include="Assets\Scripts\Boss\Boss.cs" />
     <Compile Include="Assets\Scripts\Boss\BossAttack.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Assets\Scripts\Manager\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Manager\StageManager.cs" />
     <Compile Include="Assets\Scripts\Manager\TimeManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UIDefaultFont.cs" />
     <Compile Include="Assets\Scripts\UI\UIRoot.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/ace-noone/Unity/Unity_Project(Ace1)/Unity_Project(Ace1)/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

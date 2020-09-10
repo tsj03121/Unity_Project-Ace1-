@@ -16,6 +16,9 @@ public class Boss : MonoBehaviour
     [SerializeField]
     int bossClearScore = 10000;
 
+    [SerializeField]
+    Animator animator_;
+
     public int GetBossClearScore() { return bossClearScore; }
     public void BossHit() { bossHp_ -= 1; }
 
@@ -42,5 +45,35 @@ public class Boss : MonoBehaviour
             }
             return;
         }
+    }
+
+    public void OnBossDoubleAttackAnimation()
+    {
+        BossRunAwayAnim();
+    }
+
+    public void OnBossCircleAttackAnimation(int maxCount, Vector3 position)
+    {
+        BossRunAwayAnim();
+    }
+
+    public void OnBossFanShapeAttackAnimation(float floatNum, int intNum, Vector3 position)
+    {
+        BossRunAwayAnim();
+    }
+
+    void BossRunAwayAnim()
+    {
+        if (animator_.GetBool("BossRunAwayCheck"))
+            return;
+
+        animator_.SetBool("BossRunAwayCheck", true);
+        animator_.SetTrigger("BossRunAway");
+    }
+
+    public void OnBossAppearAnim()
+    {
+        animator_.SetBool("BossRunAwayCheck", false);
+        animator_.SetTrigger("BossAppear");
     }
 }

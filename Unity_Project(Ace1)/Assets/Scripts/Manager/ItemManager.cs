@@ -11,7 +11,7 @@ public class ItemManager
     BulletLauncher bulletLauncher_;
     BuildingManager buildingManager_;
 
-    List<Item> items = new List<Item>();
+    List<Item> items_ = new List<Item>();
 
 
     public ItemManager(BulletLauncher bulletLauncher, BuildingManager buildingManager, ItemFactory attackSpeedUpItemFactory, ItemFactory attackMoveSpeedUpItemFactory, ItemFactory hpUpItemFactory)
@@ -30,13 +30,27 @@ public class ItemManager
             return;
 
         item.Activate(missile);
+        BindEvents(item);
 
+        items_.Add(item);
+    }
+
+    void BindEvents(Item item)
+    {
         item.Destroyed += OnItemDestroyed;
         item.Destroyed += bulletLauncher_.OnItemDestroyed;
         item.Destroyed += buildingManager_.OnItemDestroyed;
 
         item.OutOfScreen += OnItemOutOfScreen;
-        items.Add(item);
+    }
+
+    void UnBindEvents(Item item)
+    {
+        item.Destroyed -= OnItemDestroyed;
+        item.Destroyed -= bulletLauncher_.OnItemDestroyed;
+        item.Destroyed -= buildingManager_.OnItemDestroyed;
+
+        item.OutOfScreen -= OnItemOutOfScreen;
     }
 
     void OnItemDestroyed(Item item)
@@ -51,26 +65,25 @@ public class ItemManager
 
     void RestoreItem(Item item)
     {
-        item.Destroyed -= OnItemDestroyed;
-        item.Destroyed -= bulletLauncher_.OnItemDestroyed;
-        item.Destroyed -= buildingManager_.OnItemDestroyed;
+        UnBindEvents(item);
+        int index = items_.IndexOf(item);
 
-        item.OutOfScreen -= OnItemOutOfScreen;
-
-        int index = items.IndexOf(item);
-
-        items.RemoveAt(index);
+        items_.RemoveAt(index);
         RestoreFactoryItem(item);
     }
 
     public void OnGameEnded(bool isVictory, int buildingCount)
     {
-        if (items.Count == 0)
+        if (items_.Count == 0)
             return;
 
-        foreach (var item in items)
+        for (int i = 0; i < items_.Count; ++i)
         {
-            attackSpeedUpItemFactory_.Restore(item);
+            UnBindEvents(items_[i]);
+            int index = items_.IndexOf(items_[i]);
+            RestoreFactoryItem(items_[i]);
+            items_.RemoveAt(index);
+            i -= 1;
         }
     }
 

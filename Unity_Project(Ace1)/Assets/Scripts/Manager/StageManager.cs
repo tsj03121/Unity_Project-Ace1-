@@ -5,17 +5,30 @@ using System;
 
 public class StageManager
 {
-    [SerializeField]
-    int stageLevel_ = 9;
+    int stageLevel_ = 1;
+    int endStageLevel_;
+
+    BuildingManager buildingManager_;
 
     public Action<int> StageUp;
     public Action EndedStage;
 
+    public StageManager(BuildingManager buildingManager, int endStageLevel)
+    {
+        buildingManager_ = buildingManager;
+        endStageLevel_ = endStageLevel;
+    }
+
+    public void SetStageLevel(int stageLevel) { stageLevel_ = stageLevel; }
     public int GetStageLevel() { return stageLevel_; }
 
     public void OnAllMissilesDestroyed()
     {
-        AddStageLevel();
+        int buildingCount = buildingManager_.GetBuildingCount;
+        if (buildingCount > 0)
+        {
+            AddStageLevel();
+        }
     }
 
     public void OnBossClear(int num)
@@ -26,10 +39,19 @@ public class StageManager
     void AddStageLevel()
     {
         stageLevel_ += 1;
-        StageUp?.Invoke(stageLevel_);
-        if (stageLevel_ == 11)
+
+        if (stageLevel_ == endStageLevel_)
         {
             EndedStage?.Invoke();
+            return;
         }
+
+        StageUp?.Invoke(stageLevel_);
+    }
+
+    public void OnGameReStarted(int stageLevel)
+    {
+        SetStageLevel(stageLevel);
+        AddStageLevel();
     }
 }

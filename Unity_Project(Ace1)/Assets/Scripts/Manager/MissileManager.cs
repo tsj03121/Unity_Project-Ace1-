@@ -11,9 +11,10 @@ public class MissileManager : MonoBehaviour
     bool isInitialized_ = false;
     bool isBossPartternAttack = false;
 
-    int maxMissileCount_ = 2;
+    int stageLevel_;
+    int endStageLevel_;
     int currentMissileCount_;
-
+    int maxMissileCount_ = 2;
     float missileSpawnInterval_ = 2f;
 
     Coroutine spawningMissile_;
@@ -26,15 +27,16 @@ public class MissileManager : MonoBehaviour
 
     public Factory GetMissileFactory() { return missileFactory_; }
 
-    public void Initialize(Factory missileFactory, BuildingManager buildingManager, int maxMissileCount, float missileSpawnInterval)
+    public void Initialize(Factory missileFactory, BuildingManager buildingManager, int maxMissileCount, float missileSpawnInterval, int endStageLevel)
     {
         if (isInitialized_)
             return;
 
-        this.missileFactory_ = missileFactory;
-        this.buildingManager_ = buildingManager;
-        this.maxMissileCount_ = maxMissileCount;
-        this.missileSpawnInterval_ = missileSpawnInterval;
+        missileFactory_ = missileFactory;
+        buildingManager_ = buildingManager;
+        maxMissileCount_ = maxMissileCount;
+        missileSpawnInterval_ = missileSpawnInterval;
+        endStageLevel_ = endStageLevel;
 
         isInitialized_ = true;
     }
@@ -57,9 +59,6 @@ public class MissileManager : MonoBehaviour
 
     void SpawnMissile()
     {
-        Debug.Assert(this.missileFactory_ != null, "missile factory is null!");
-        Debug.Assert(this.buildingManager_ != null, "building Manager is null!");
-
         RecycleObject missileRecycle = missileFactory_.Get();
         missileRecycle.Activate(GetMissileSpawnPosition(), buildingManager_.GetRandomBuildingPosition());
 
@@ -94,18 +93,24 @@ public class MissileManager : MonoBehaviour
 
         Missile missile = (Missile)missileRecycle;
         int index = missiles_.IndexOf(missile);
-        missiles_.RemoveAt(index);
         missileFactory_.Restore(missile);
+        missiles_.RemoveAt(index);
 
         CheckAllMissileRestored();
     }
 
     void CheckAllMissileRestored()
     {
-        if (currentMissileCount_ == maxMissileCount_ && missiles_.Count == 0)
-        {
-            AllMissilesDestroyed?.Invoke();
-        }
+        if (currentMissileCount_ != maxMissileCount_)
+            return;
+
+        if (missiles_.Count != 0)
+            return;
+
+        if (stageLevel_ % 10 == 0)
+            return;
+
+        AllMissilesDestroyed?.Invoke();
     }
 
     Vector3 GetMissileSpawnPosition()
@@ -132,12 +137,12 @@ public class MissileManager : MonoBehaviour
 
     public void OnGameStarted()
     {
-        currentMissileCount_ = 0;
-        spawningMissile_ = StartCoroutine(AutoSpawnMissile());
+        OnStageUp(1);
     }
 
     IEnumerator AutoSpawnMissile()
     {
+        yield return new WaitForSeconds(1.5f);
         while(currentMissileCount_ < maxMissileCount_)
         {
             yield return new WaitForSeconds(missileSpawnInterval_);
@@ -149,23 +154,33 @@ public class MissileManager : MonoBehaviour
         }
     }
 
+    public void OnGameReStarted(int stageLevel)
+    {
+        OnGameEnded(false, 0);
+    }
+
     public void OnGameEnded(bool isVictory, int buildingCount)
     {
         if (missiles_.Count == 0)
             return;
 
-        foreach (var missile in missiles_)
+        for (int i = 0; i < missiles_.Count; ++i)
         {
-            missileFactory_.Restore(missile);
+            UnBindEvents(missiles_[i]);
+            int index = missiles_.IndexOf(missiles_[i]);
+            missileFactory_.Restore(missiles_[i]);
+            missiles_.RemoveAt(index);
+            i -= 1;
         }
     }
 
     public void OnStageUp(int stageLevel)
     {
         currentMissileCount_ = 0;
+        stageLevel_ = stageLevel;
         maxMissileCount_ = stageLevel * 2;
         missileSpawnInterval_ = 2f / stageLevel;
-        if (stageLevel < 10)
+        if (stageLevel % 10 != 0 && stageLevel < endStageLevel_)
         {
             spawningMissile_ = StartCoroutine(AutoSpawnMissile());
         }
@@ -209,29 +224,31 @@ public class MissileManager : MonoBehaviour
         Missile rightMissile = (Missile)recycleObject;
         rightMissile.BuildingDestroyed += OnMissileBuildingDestroyed;
         missiles_.Add(recycleObject);
+        currentMissileCount_++;
     }
 
-    public void OnBossCircleAttack(Transform transform)
+    public void OnBossCircleAttack(int maxCount, Vector3 position)
     {
         int count = 0;
-        int maxCount = UnityEngine.Random.Range(20, 22);
-        while (count <= maxCount)
+        int maxCountNum = UnityEngine.Random.Range(maxCount, maxCount + 2);
+        while (count <= maxCountNum)
         {
             RecycleObject missileRecycle = missileFactory_.Get();
             missileRecycle.transform.rotation = Quaternion.identity;
 
-            Vector3 rotVec = Vector3.forward * 360 * count / maxCount;
+            Vector3 rotVec = Vector3.forward * 360 * count / maxCountNum;
             missileRecycle.transform.Rotate(rotVec);
-            missileRecycle.Activate(transform.position);
+            missileRecycle.Activate(position);
 
             BindEvents(missileRecycle);
 
             missiles_.Add(missileRecycle);
+            currentMissileCount_++;
             count += 1;
         }
     }
 
-    public void OnBossPatternFanShapeAttack(float count, int maxCount)
+    public void OnBossPatternFanShapeAttack(float count, int maxCount, Vector3 position)
     {
         RecycleObject missileRecycle = missileFactory_.Get();
         missileRecycle.transform.rotation = Quaternion.identity;
@@ -240,11 +257,10 @@ public class MissileManager : MonoBehaviour
 
         Vector3 rotVec = Vector3.forward * z;
         missileRecycle.transform.Rotate(rotVec);
-        missileRecycle.Activate(transform.position);
-
-        Debug.Log(missileRecycle.transform.position);
+        missileRecycle.Activate(position);
 
         BindEvents(missileRecycle);
         missiles_.Add(missileRecycle);
+        currentMissileCount_++;
     }
 }
