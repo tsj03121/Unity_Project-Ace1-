@@ -22,15 +22,15 @@ public class BulletLauncher : MonoBehaviour
 
     bool isGameStarted_ = false;
 
-    Factory bulletFactory_;
-    Factory explosionFactory_;
+    Factory<RecycleObject> bulletFactory_;
+    Factory<RecycleObject> explosionFactory_;
 
     public Action<int> MaxItem;
 
     void Start()
     {
-        bulletFactory_ = new Factory(bulletPrefab_);
-        explosionFactory_ = new Factory(explosionPrefab_);
+        bulletFactory_ = new Factory<RecycleObject>(bulletPrefab_);
+        explosionFactory_ = new Factory<RecycleObject>(explosionPrefab_);
     }
 
     // Update is called once per frame

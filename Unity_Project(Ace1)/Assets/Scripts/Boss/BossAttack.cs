@@ -9,7 +9,7 @@ public class BossAttack : MonoBehaviour
     Vector3 attackPos_;
 
     Transform target_;
-    Factory missileFactory_;
+    Factory<RecycleObject> missileFactory_;
     Coroutine bossPartternCoroutine_;
 
     public Action BossAppear;

@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{D08B8604-48F0-4767-A68B-DAB9F253BACD}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Shape/Shape.cs">
+    <Files>
+      <File FileName="Assets/Shape/Shape.cs" Line="95" Column="14" />
+      <File FileName="Assets/Shape/Block.cs" Line="29" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Unity_Project(Ace2_Tetirs3D)" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Shape" expanded="True">
+                <Node name="Shape.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="525773f7-15d4-4772-a471-99b92a3793ae" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

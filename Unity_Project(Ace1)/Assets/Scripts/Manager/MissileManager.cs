@@ -5,7 +5,7 @@ using System;
 
 public class MissileManager : MonoBehaviour
 {
-    Factory missileFactory_;
+    Factory<RecycleObject> missileFactory_;
     BuildingManager buildingManager_;
 
     bool isInitialized_ = false;
@@ -15,6 +15,7 @@ public class MissileManager : MonoBehaviour
     int endStageLevel_;
     int currentMissileCount_;
     int maxMissileCount_ = 2;
+    int sortingOrder = 0;
     float missileSpawnInterval_ = 2f;
 
     Coroutine spawningMissile_;
@@ -25,9 +26,9 @@ public class MissileManager : MonoBehaviour
     public Action<RecycleObject> MissileDestroyed;
     public Action AllMissilesDestroyed;
 
-    public Factory GetMissileFactory() { return missileFactory_; }
+    public Factory<RecycleObject> GetMissileFactory() { return missileFactory_; }
 
-    public void Initialize(Factory missileFactory, BuildingManager buildingManager, int maxMissileCount, float missileSpawnInterval, int endStageLevel)
+    public void Initialize(Factory<RecycleObject> missileFactory, BuildingManager buildingManager, int maxMissileCount, float missileSpawnInterval, int endStageLevel)
     {
         if (isInitialized_)
             return;
@@ -57,9 +58,18 @@ public class MissileManager : MonoBehaviour
         missile.BuildingDestroyed -= OnMissileBuildingDestroyed;
     }
 
+    void SortingOrderSetting(RecycleObject missileRecycle)
+    {
+        missileRecycle.GetSpriteRenderer();
+        SpriteRenderer spriteRenderer = missileRecycle.GetSpriteRenderer();
+        sortingOrder += 1;
+        spriteRenderer.sortingOrder = sortingOrder;
+    }
+
     void SpawnMissile()
     {
         RecycleObject missileRecycle = missileFactory_.Get();
+        SortingOrderSetting(missileRecycle);
         missileRecycle.Activate(GetMissileSpawnPosition(), buildingManager_.GetRandomBuildingPosition());
 
         BindEvents(missileRecycle);
@@ -193,12 +203,14 @@ public class MissileManager : MonoBehaviour
 
         if (random == 0)
         {
-            RecycleObject leftMissileRecycle = missileFactory_.Get();
+            RecycleObject leftMissileRecycle = missileFactory_.Get();            
+            SortingOrderSetting(leftMissileRecycle);
             Vector3 spawnMissile = GetMissileSpawnPosition(transforms[0].position.x);
             leftMissileRecycle.Activate(spawnMissile, transforms[0].position);
             BossPatternDoubleAttackSetting(leftMissileRecycle);
 
             RecycleObject rightMissileRecycle = missileFactory_.Get();
+            SortingOrderSetting(rightMissileRecycle);
             spawnMissile = GetMissileSpawnPosition(transforms[3].position.x);
             rightMissileRecycle.Activate(spawnMissile, transforms[3].position);
             BossPatternDoubleAttackSetting(rightMissileRecycle);
@@ -206,11 +218,13 @@ public class MissileManager : MonoBehaviour
         else
         {
             RecycleObject leftMissileRecycle = missileFactory_.Get();
+            SortingOrderSetting(leftMissileRecycle);
             Vector3 spawnMissile = GetMissileSpawnPosition(transforms[1].position.x);
             leftMissileRecycle.Activate(spawnMissile, transforms[1].position);
             BossPatternDoubleAttackSetting(leftMissileRecycle);
 
             RecycleObject rightMissileRecycle = missileFactory_.Get();
+            SortingOrderSetting(rightMissileRecycle);
             spawnMissile = GetMissileSpawnPosition(transforms[2].position.x);
             rightMissileRecycle.Activate(spawnMissile, transforms[2].position);
             BossPatternDoubleAttackSetting(rightMissileRecycle);
@@ -234,6 +248,7 @@ public class MissileManager : MonoBehaviour
         while (count <= maxCountNum)
         {
             RecycleObject missileRecycle = missileFactory_.Get();
+            SortingOrderSetting(missileRecycle);
             missileRecycle.transform.rotation = Quaternion.identity;
 
             Vector3 rotVec = Vector3.forward * 360 * count / maxCountNum;
@@ -251,6 +266,7 @@ public class MissileManager : MonoBehaviour
     public void OnBossPatternFanShapeAttack(float count, int maxCount, Vector3 position)
     {
         RecycleObject missileRecycle = missileFactory_.Get();
+        SortingOrderSetting(missileRecycle);
         missileRecycle.transform.rotation = Quaternion.identity;
 
         float z = Mathf.Abs(Mathf.Cos(count / maxCount * 10f)) * 120 + 120;

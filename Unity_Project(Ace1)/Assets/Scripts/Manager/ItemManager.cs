@@ -5,16 +5,16 @@ using System;
 
 public class ItemManager
 {
-    ItemFactory attackSpeedUpItemFactory_;
-    ItemFactory attackMoveSpeedUpItemFactory_;
-    ItemFactory hpUpItemFactory_;
+    Factory<Item> attackSpeedUpItemFactory_;
+    Factory<Item> attackMoveSpeedUpItemFactory_;
+    Factory<Item> hpUpItemFactory_;
     BulletLauncher bulletLauncher_;
     BuildingManager buildingManager_;
 
     List<Item> items_ = new List<Item>();
 
 
-    public ItemManager(BulletLauncher bulletLauncher, BuildingManager buildingManager, ItemFactory attackSpeedUpItemFactory, ItemFactory attackMoveSpeedUpItemFactory, ItemFactory hpUpItemFactory)
+    public ItemManager(BulletLauncher bulletLauncher, BuildingManager buildingManager, Factory<Item> attackSpeedUpItemFactory, Factory<Item> attackMoveSpeedUpItemFactory, Factory<Item> hpUpItemFactory)
     {
         bulletLauncher_ = bulletLauncher;
         buildingManager_ = buildingManager;

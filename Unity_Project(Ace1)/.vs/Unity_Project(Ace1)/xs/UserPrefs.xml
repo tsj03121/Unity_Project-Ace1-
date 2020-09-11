@@ -1,23 +1,22 @@
 ﻿<Properties StartupConfiguration="{4AE97BEE-04D3-FAF8-6A8D-52BB0E833EEC}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/UIRoot.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Manager/GameManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Bullet/Bullet.cs" Line="28" Column="24" />
+      <File FileName="Assets/Scripts/Bullet/Bullet.cs" Line="30" Column="10" />
       <File FileName="Assets/Scripts/Building/Building.cs" />
       <File FileName="Assets/Scripts/Manager/BuildingManager.cs" />
       <File FileName="Assets/Scripts/Manager/TimeManager.cs" />
       <File FileName="Assets/Scripts/Enemy/Missile.cs" />
       <File FileName="Assets/Scripts/Manager/MissileManager.cs" />
       <File FileName="Assets/Scripts/Manager/ScoreManager.cs" />
-      <File FileName="Assets/Scripts/UI/UIRoot.cs" Line="74" Column="1" />
+      <File FileName="Assets/Scripts/UI/UIRoot.cs" />
       <File FileName="Assets/Scripts/Audio/AudioStorage.cs" />
       <File FileName="Assets/Scripts/Manager/AudioManager.cs" />
       <File FileName="Assets/Scripts/Manager/StageManager.cs" />
-      <File FileName="Assets/Scripts/Factory/ItemFactory.cs" />
       <File FileName="Assets/Scripts/Factory/Item.cs" />
       <File FileName="Assets/Scripts/Effect/Explosion.cs" />
       <File FileName="Assets/Scripts/Manager/ItemManager.cs" />
-      <File FileName="Assets/Scripts/Factory/RecycleObject.cs" />
-      <File FileName="Assets/Scripts/Manager/GameManager.cs" />
+      <File FileName="Assets/Scripts/Factory/RecycleObject.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Manager/GameManager.cs" Line="101" Column="16" />
       <File FileName="Assets/Scripts/Bullet/BulletLauncher.cs" />
       <File FileName="Assets/Scripts/Effect/DestroyEffect.cs" />
       <File FileName="Assets/Scripts/Controller/MouseGameController.cs" />
@@ -26,7 +25,6 @@
       <File FileName="Assets/Scripts/Controller/KeyGameController.cs" />
       <File FileName="Assets/Scripts/Item/AttackMoveSpeedUpItem.cs" />
       <File FileName="Assets/Scripts/Item/HpUpItem.cs" />
-      <File FileName="Assets/Scripts/Factory/BuildingFactory.cs" />
       <File FileName="Assets/Scripts/Boss/Boss.cs" />
       <File FileName="Assets/Scripts/Manager/BossManager.cs" />
       <File FileName="Assets/Scripts/Boss/BossAttack.cs" />
@@ -50,10 +48,10 @@
                 <Node name="Enemy" expanded="True" />
                 <Node name="Factory" expanded="True" />
                 <Node name="Item" expanded="True" />
-                <Node name="Manager" expanded="True" />
-                <Node name="UI" expanded="True">
-                  <Node name="UIRoot.cs" selected="True" />
+                <Node name="Manager" expanded="True">
+                  <Node name="GameManager.cs" selected="True" />
                 </Node>
+                <Node name="UI" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -63,7 +61,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6f05bfe7-76ab-4f6f-9104-bfb289e4963f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="525773f7-15d4-4772-a471-99b92a3793ae" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

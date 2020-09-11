@@ -76,14 +76,14 @@ public class GameManager : MonoBehaviour
         launcher_.transform.position = launcherLocator_.position;
 
         mouseGameController_ = gameObject.AddComponent<MouseGameController>();
-        buildingManager_ = new BuildingManager(new BuildingFactory(buildingPrefab_), buildingLocators_, new Factory(effectPrefab_, 2));
+        buildingManager_ = new BuildingManager(new Factory<Building>(buildingPrefab_), buildingLocators_, new Factory<DestroyEffect>(effectPrefab_, 2));
         timeManager_ = gameObject.AddComponent<TimeManager>();
         missileManager_ = gameObject.AddComponent<MissileManager>();
+        missileManager_.Initialize(new Factory<RecycleObject>(missilePrefab_), buildingManager_, maxMissileCount_, missileSpawnInterval_, endStageLevel_);
         stageManager_ = new StageManager(buildingManager_, endStageLevel_);
-        missileManager_.Initialize(new Factory(missilePrefab_), buildingManager_, maxMissileCount_, missileSpawnInterval_, endStageLevel_);
         scoreManager_ = new ScoreManager(scorePerMissile_, scorePerBuilding_);
         itemManager_ = new ItemManager(launcher_, buildingManager_,
-            new ItemFactory(attackSpeedItemPrefab_), new ItemFactory(attackMoveSpeedUpItemrefab_), new ItemFactory(hpUpItemPrefab_));
+            new Factory<Item>(attackSpeedItemPrefab_), new Factory<Item>(attackMoveSpeedUpItemrefab_), new Factory<Item>(hpUpItemPrefab_));
         bossManager_ = gameObject.AddComponent<BossManager>();
         bossManager_.Initialize(bossPrefab_, missileManager_, launcher_.transform);
         uIAnimation_ = uIRoot_.GetUIAnimation();

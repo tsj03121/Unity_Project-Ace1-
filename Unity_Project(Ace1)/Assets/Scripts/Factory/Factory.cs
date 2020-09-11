@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Factory
+public class Factory<T> where T : MonoBehaviour
 {
-    List<RecycleObject> pool_ = new List<RecycleObject>();
+    List<T> pool_ = new List<T>();
     int defaultPoolSize_;
-    RecycleObject prefab_;
+    T prefab_;
 
-    int sortingOrder = 0;
+    public int DefaultPoolSize { get; }
 
-    public Factory(RecycleObject prefab, int defaultPoolSize = 5)
+    public Factory(T prefab, int defaultPoolSize = 5)
     {
         prefab_ = prefab;
         defaultPoolSize_ = defaultPoolSize;
@@ -22,13 +22,13 @@ public class Factory
     {
         for(int i = 0; i < defaultPoolSize_; ++i)
         {
-            RecycleObject obj = GameObject.Instantiate(prefab_) as RecycleObject;
+            T obj = GameObject.Instantiate(prefab_) as T;
             obj.gameObject.SetActive(false);
             pool_.Add(obj);
         }
     }
 
-    public RecycleObject Get()
+    public T Get()
     {
         if(pool_.Count == 0)
         {
@@ -36,17 +36,14 @@ public class Factory
         }
 
         int lastIndex = pool_.Count - 1;
-        RecycleObject obj = pool_[lastIndex];
-        SpriteRenderer spriteRenderer = obj.GetSpriteRenderer();
-        sortingOrder += 1;
-        spriteRenderer.sortingOrder = sortingOrder;
+        T obj = pool_[lastIndex];
         pool_.RemoveAt(lastIndex);
         obj.gameObject.SetActive(true);
             
         return obj;
     }
 
-    public void Restore(RecycleObject obj)
+    public void Restore(T obj)
     {
         Debug.Assert(obj != null, "Null object to be returned!");
         obj.gameObject.SetActive(false);

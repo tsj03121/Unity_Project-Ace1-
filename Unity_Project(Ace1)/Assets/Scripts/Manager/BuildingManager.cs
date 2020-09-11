@@ -6,8 +6,8 @@ using System;
 public class BuildingManager
 {
     Transform[] buildingLocators_;
-    Factory effectFactory_;
-    BuildingFactory buildingFactory_;
+    Factory<DestroyEffect> effectFactory_;
+    Factory<Building> buildingFactory_;
 
     List<Building> buildings_ = new List<Building>();
 
@@ -25,7 +25,7 @@ public class BuildingManager
     public Action AllBuildingsDestroyed;
     public Action AddBuildingScore;
 
-    public BuildingManager(BuildingFactory buildingFactory, Transform[] buildingLocators, Factory effectFactory)
+    public BuildingManager(Factory<Building> buildingFactory, Transform[] buildingLocators, Factory<DestroyEffect> effectFactory)
     {
         buildingLocators_ = buildingLocators;
         effectFactory_ = effectFactory;
@@ -88,7 +88,7 @@ public class BuildingManager
     void OnEffectDestroyed(RecycleObject effect)
     {
         effect.Destroyed -= OnEffectDestroyed;
-        effectFactory_.Restore(effect);
+        effectFactory_.Restore(effect as DestroyEffect);
     }
 
     public void OnGameStarted()

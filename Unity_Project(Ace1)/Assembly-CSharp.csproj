@@ -76,10 +76,8 @@
     <Compile Include="Assets\Scripts\Effect\DestroyEffect.cs" />
     <Compile Include="Assets\Scripts\Effect\Explosion.cs" />
     <Compile Include="Assets\Scripts\Enemy\Missile.cs" />
-    <Compile Include="Assets\Scripts\Factory\BuildingFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\Factory.cs" />
     <Compile Include="Assets\Scripts\Factory\Item.cs" />
-    <Compile Include="Assets\Scripts\Factory\ItemFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\RecycleObject.cs" />
     <Compile Include="Assets\Scripts\Item\AttackMoveSpeedUpItem.cs" />
     <Compile Include="Assets\Scripts\Item\AttackSpeedUpItem.cs" />
