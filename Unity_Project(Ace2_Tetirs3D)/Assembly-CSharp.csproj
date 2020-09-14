@@ -63,8 +63,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Shape\Block.cs" />
-    <Compile Include="Assets\Shape\Shape.cs" />
+    <Compile Include="Assets\Scripts\Block\BlockConfirm.cs" />
+    <Compile Include="Assets\Scripts\Controller\Controller.cs" />
+    <Compile Include="Assets\Scripts\Factory\Factory.cs" />
+    <Compile Include="Assets\Scripts\Manager\CameraManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\GridManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\ShapeManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\UIManager.cs" />
+    <Compile Include="Assets\Scripts\Shape\Shape.cs" />
+    <Compile Include="Assets\Scripts\UI\LobbyGameStart.cs" />
+    <Compile Include="Assets\Scripts\UI\NextShapeRotation.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/ace-noone/Unity/Unity_Project(Ace1)/Unity_Project(Ace2_Tetirs3D)/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
