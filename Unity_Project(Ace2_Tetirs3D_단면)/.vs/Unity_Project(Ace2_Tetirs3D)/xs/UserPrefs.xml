@@ -1,0 +1,44 @@
+﻿<Properties StartupConfiguration="{D08B8604-48F0-4767-A68B-DAB9F253BACD}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Manager/GridManager.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Shape/Shape.cs" Line="34" Column="73" />
+      <File FileName="Assets/Scripts/Controller/Controller.cs" Line="19" Column="43" />
+      <File FileName="Assets/Scripts/Factory/Factory.cs" Line="44" Column="17" />
+      <File FileName="Assets/Scripts/Manager/CameraManager.cs" Line="15" Column="29" />
+      <File FileName="Assets/Scripts/UI/LobbyGameStart.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Manager/GameManager.cs" Line="46" Column="1" />
+      <File FileName="Assets/Scripts/Manager/GridManager.cs" Line="44" Column="43" />
+      <File FileName="Assets/Scripts/Manager/ShapeManager.cs" Line="9" Column="10" />
+      <File FileName="Assets/Scripts/Block/BlockConfirm.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Manager/ScoreManager.cs" Line="14" Column="24" />
+      <File FileName="Assets/Scripts/UI/NextShapeRotation.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Unity_Project(Ace2_Tetirs3D)" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Block" expanded="True" />
+                <Node name="Controller" expanded="True" />
+                <Node name="Factory" expanded="True" />
+                <Node name="Manager" expanded="True">
+                  <Node name="GridManager.cs" selected="True" />
+                </Node>
+                <Node name="Shape" expanded="True" />
+                <Node name="UI" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="74ced44d-4e16-4de0-aa87-5b06ecc2735b" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
