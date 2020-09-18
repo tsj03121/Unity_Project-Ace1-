@@ -1,0 +1,45 @@
+﻿<Properties StartupConfiguration="{25CAA2DA-36C2-4097-3D6C-012704EC32F6}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Test.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Controller/Controller.cs" Line="88" Column="1" />
+      <File FileName="Assets/Scripts/Manager/CameraManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Manager/GameManager.cs" Line="35" Column="6" />
+      <File FileName="Assets/Scripts/Manager/GridManager.cs" Line="81" Column="72" />
+      <File FileName="Assets/Scripts/Block/BlockConfirm.cs" Line="48" Column="6" />
+      <File FileName="Assets/Scripts/Manager/ShapeManager.cs" Line="134" Column="1" />
+      <File FileName="Assets/Scripts/Shape/Shape.cs" Line="92" Column="29" />
+      <File FileName="Assets/Scripts/Manager/UIManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Factory/Factory.cs" Line="29" Column="28" />
+      <File FileName="Assets/Scripts/Manager/ScoreManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Test.cs" Line="19" Column="1" />
+      <File FileName="Assets/Scripts/UI/LobbyGameStart.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/NextShapeRotation.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Unity_Project(Ace2_Tetirs3D_입체)" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Block" expanded="True" />
+                <Node name="Controller" expanded="True" />
+                <Node name="Factory" expanded="True" />
+                <Node name="Manager" expanded="True" />
+                <Node name="Shape" expanded="True" />
+                <Node name="UI" expanded="True" />
+                <Node name="Test.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="2cefb299-c163-453b-9f0e-ddd95761898f" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
