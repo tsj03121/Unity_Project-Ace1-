@@ -26,6 +26,9 @@ public class ShapeManager : MonoBehaviour
     List<GameObject> _currBlocks = new List<GameObject>();
     List<ShapeConfirm.ShapeType> _shapeTypes = new List<ShapeConfirm.ShapeType>();
 
+    [SerializeField]
+    ShapeConfirm shapeConfirm = new ShapeConfirm();
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -75,7 +78,7 @@ public class ShapeManager : MonoBehaviour
         NewCreateShape();
     }
 
-    public void NewCreateShape(int size = 4)
+    public void NewCreateShape()
     {
         if (_shapeTypes.Count == 0)
         {
@@ -102,7 +105,7 @@ public class ShapeManager : MonoBehaviour
 
         Vector3[] vector3s = _blockConfirm.GetShapePos(shapeType);
 
-        for (int i = 0; i < size; ++i)
+        for (int i = 0; i < vector3s.Length; ++i)
         {
             _currBlocks.Add(_blockFactory.Get());
             _downPosBlocks.Add(_downPosShowFactory.Get());

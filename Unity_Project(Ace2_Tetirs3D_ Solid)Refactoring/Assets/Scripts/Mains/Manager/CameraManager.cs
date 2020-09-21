@@ -5,10 +5,24 @@ using System;
 
 public class CameraManager : MonoBehaviour
 {
+
+
     [SerializeField]
-    GameObject[] _shapes;
+    GameObject _shapeListParent;
+
+    [SerializeField]
+    NextShapeRotation[] _shapes;
 
     GameObject _currNextShape;
+
+    void Awake()
+    {
+        _shapes = _shapeListParent.GetComponentsInChildren<NextShapeRotation>();
+        for(int i = 0; i < _shapes.Length; i++)
+        {
+            _shapes[i].transform.gameObject.SetActive(false);
+        }
+    }
 
     public void OnCreateBlock(ShapeConfirm.ShapeType shapeType)
     {
@@ -17,7 +31,7 @@ public class CameraManager : MonoBehaviour
 
         int shapesIndex = (int)shapeType;
 
-        _currNextShape = _shapes[shapesIndex];
+        _currNextShape = _shapes[shapesIndex].transform.gameObject;
         _currNextShape.gameObject.SetActive(true);
        
     }

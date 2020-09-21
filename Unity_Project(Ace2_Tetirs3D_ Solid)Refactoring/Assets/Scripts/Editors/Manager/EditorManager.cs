@@ -1,26 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EditorManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject _cube;
+    EditorController _editorController;
 
-    // Start is called before the first frame update
+    [SerializeField]
+    EditCube _cubeEdit;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void OnClickCreateCube()
-    {
-
+        _editorController.CallbackCreateClick += _cubeEdit.OnCreateClick;
+        _editorController.CallbackDeleteClick += _cubeEdit.OnDeleteClick;
     }
 }

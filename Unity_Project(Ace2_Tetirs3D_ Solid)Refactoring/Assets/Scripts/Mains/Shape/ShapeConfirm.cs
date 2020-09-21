@@ -13,8 +13,34 @@ public class ShapeConfirm
         J,
         L,
         T,
-
+        SL,
+        X,
         NULL
+    }
+
+    Vector3 _basicCreatePos = new Vector3(5, 19, 5);
+
+    public Vector3[] PosShapeType_X()
+    {
+        Vector3[] vector3s =
+        {
+            _basicCreatePos + new Vector3(0f,-2f,0f),
+            _basicCreatePos + new Vector3(0f,0f,0f),
+            _basicCreatePos + new Vector3(1f,-1f,0f),
+            _basicCreatePos + new Vector3(-1f,-1f,0f)
+        };
+        return vector3s;
+    }
+
+    public Vector3[] PosShapeType_SL()
+    {
+        Vector3[] vector3s =
+        {
+            _basicCreatePos,
+            _basicCreatePos + Vector3.down,
+            _basicCreatePos + new Vector3(1, -1, 0),
+        };
+        return vector3s;
     }
 
     //기본 초기 위치 셋팅들
@@ -22,10 +48,10 @@ public class ShapeConfirm
     {
         Vector3[] vector3s =
         {
-            new Vector3(4, 19, 5),
-            new Vector3(3, 19, 5),
-            new Vector3(5, 19, 5),
-            new Vector3(6, 19, 5)
+            _basicCreatePos + Vector3.left,
+            _basicCreatePos + new Vector3(-2, 0, 0),
+            _basicCreatePos,
+            _basicCreatePos + Vector3.right
         };
         return vector3s;
     }
@@ -34,10 +60,10 @@ public class ShapeConfirm
     {
         Vector3[] vector3s =
         {
-            new Vector3(5, 19, 5),
-            new Vector3(4, 19, 5),
-            new Vector3(5, 18, 5),
-            new Vector3(4, 18, 5)
+            _basicCreatePos,
+            _basicCreatePos + Vector3.left,
+            _basicCreatePos + Vector3.down,
+            _basicCreatePos + new Vector3(-1, -1, 0)
         };
         return vector3s;
     }
@@ -46,10 +72,10 @@ public class ShapeConfirm
     {
         Vector3[] vector3s =
         {
-            new Vector3(4, 19, 5),
-            new Vector3(3, 19, 5),
-            new Vector3(4, 18, 5),
-            new Vector3(5, 18, 5)
+            _basicCreatePos + Vector3.left,
+            _basicCreatePos + new Vector3(-2, 0, 0),
+            _basicCreatePos + new Vector3(-1, -1, 0),
+            _basicCreatePos + Vector3.down
         };
         return vector3s;
     }
@@ -58,10 +84,10 @@ public class ShapeConfirm
     {
         Vector3[] vector3s =
         {
-            new Vector3(4, 19, 5),
-            new Vector3(5, 19, 5),
-            new Vector3(4, 18, 5),
-            new Vector3(3, 18, 5)
+            _basicCreatePos + Vector3.left,
+            _basicCreatePos,
+            _basicCreatePos + new Vector3(-1, -1, 0),
+            _basicCreatePos + new Vector3(-2, -1, 0)
         };
         return vector3s;
     }
@@ -70,10 +96,10 @@ public class ShapeConfirm
     {
         Vector3[] vector3s =
         {
-            new Vector3(4, 18, 5),
-            new Vector3(5, 19, 5),
-            new Vector3(5, 18, 5),
-            new Vector3(3, 18, 5)
+            _basicCreatePos + new Vector3(-1, -1, 0),
+            _basicCreatePos,
+            _basicCreatePos + Vector3.down,
+            _basicCreatePos + new Vector3(-2, -1, 0)
         };
         return vector3s;
     }
@@ -82,10 +108,10 @@ public class ShapeConfirm
     {
         Vector3[] vector3s =
         {
-            new Vector3(5, 18, 5),
-            new Vector3(4, 19, 5),
-            new Vector3(4, 18, 5),
-            new Vector3(6, 18, 5)
+            _basicCreatePos + Vector3.down,
+            _basicCreatePos + Vector3.left,
+            _basicCreatePos + new Vector3(-1, -1, 0),
+            _basicCreatePos + new Vector3(1, -1, 0)
         };
         return vector3s;
     }
@@ -94,10 +120,10 @@ public class ShapeConfirm
     {
         Vector3[] vector3s =
         {
-            new Vector3(5, 18, 5),
-            new Vector3(4, 18, 5),
-            new Vector3(5, 19, 5),
-            new Vector3(6, 18, 5)
+            _basicCreatePos + Vector3.down,
+            _basicCreatePos + new Vector3(-1, -1, 0),
+            _basicCreatePos,
+            _basicCreatePos + new Vector3(1, -1, 0)
         };
         return vector3s;
     }
@@ -134,8 +160,15 @@ public class ShapeConfirm
                 {
                     return PosShapeType_T();
                 }
+            case ShapeType.SL:
+                {
+                    return PosShapeType_SL();
+                }
+            case ShapeType.X:
+                {
+                    return PosShapeType_X();
+                }
         }
-
         return null;
     }
 
@@ -226,13 +259,13 @@ public class ShapeConfirm
 
     public Vector3[] RotShapeType(Vector3 basePoint, float[] points_X, float[] points_Y, float[] points_Z)
     {
-        Vector3[] vector3s =
+        Vector3[] vector3s = new Vector3[points_X.Length + 1];
+
+        vector3s[0] = basePoint;
+        for (int i = 0; i < points_X.Length; i++)
         {
-            new Vector3(0, 0, 0) + basePoint,
-            new Vector3(points_X[0], points_Y[0], points_Z[0]) + basePoint,
-            new Vector3(points_X[1], points_Y[1], points_Z[1]) + basePoint,
-            new Vector3(points_X[2], points_Y[2], points_Z[2]) + basePoint
-        };
+            vector3s[i + 1] = new Vector3(points_X[i], points_Y[i], points_Z[i]) + basePoint;
+        }
         return vector3s;
     }
 

@@ -31,8 +31,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     UIManager _uIManager;
 
+    [SerializeField]
+    ShapePosData[] _shapePosData;
+
     void Awake()
     {
+        _shapePosData = Resources.LoadAll<ShapePosData>("");
         _blockFactory = new Factory(_prefab);
         Factory downPosShowFactory_ = new Factory(_downPosShowPrefab, 4);
         _shapeManager.Init(_controller, _blockFactory, downPosShowFactory_);
