@@ -63,22 +63,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Editors\Controller\EditorController.cs" />
-    <Compile Include="Assets\Scripts\Editors\EditCube.cs" />
-    <Compile Include="Assets\Scripts\Editors\Manager\EditorManager.cs" />
-    <Compile Include="Assets\Scripts\Mains\Controller\Controller.cs" />
-    <Compile Include="Assets\Scripts\Mains\Factory\Factory.cs" />
-    <Compile Include="Assets\Scripts\Mains\Manager\CameraManager.cs" />
-    <Compile Include="Assets\Scripts\Mains\Manager\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Mains\Manager\GridManager.cs" />
-    <Compile Include="Assets\Scripts\Mains\Manager\ScoreManager.cs" />
-    <Compile Include="Assets\Scripts\Mains\Manager\ShapeManager.cs" />
-    <Compile Include="Assets\Scripts\Mains\Manager\UIManager.cs" />
-    <Compile Include="Assets\Scripts\Mains\Shape\Shape.cs" />
-    <Compile Include="Assets\Scripts\Mains\Shape\ShapeConfirm.cs" />
-    <Compile Include="Assets\Scripts\Mains\UI\LobbyGameStart.cs" />
-    <Compile Include="Assets\Scripts\Mains\UI\NextShapeRotation.cs" />
-    <Compile Include="Assets\Scripts\ShapePosData.cs" />
+    <Compile Include="Assets\_Scripts\Editors\Controller\EditorController.cs" />
+    <Compile Include="Assets\_Scripts\Editors\EditCube.cs" />
+    <Compile Include="Assets\_Scripts\Editors\Manager\EditorManager.cs" />
+    <Compile Include="Assets\_Scripts\Mains\Controller\Controller.cs" />
+    <Compile Include="Assets\_Scripts\Mains\Factory\Factory.cs" />
+    <Compile Include="Assets\_Scripts\Mains\Manager\CameraManager.cs" />
+    <Compile Include="Assets\_Scripts\Mains\Manager\GameManager.cs" />
+    <Compile Include="Assets\_Scripts\Mains\Manager\GridManager.cs" />
+    <Compile Include="Assets\_Scripts\Mains\Manager\ScoreManager.cs" />
+    <Compile Include="Assets\_Scripts\Mains\Manager\ShapeManager.cs" />
+    <Compile Include="Assets\_Scripts\Mains\Manager\UIManager.cs" />
+    <Compile Include="Assets\_Scripts\Mains\Shape\Shape.cs" />
+    <Compile Include="Assets\_Scripts\Mains\Shape\ShapeConfirm.cs" />
+    <Compile Include="Assets\_Scripts\Mains\UI\LobbyGameStart.cs" />
+    <Compile Include="Assets\_Scripts\Mains\UI\NextShapeRotation.cs" />
+    <Compile Include="Assets\_Scripts\ShapePosData.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/ace-noone/Unity/Unity_Project(Ace1)/Unity_Project(Ace2_Tetirs3D_ Solid)Refactoring/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

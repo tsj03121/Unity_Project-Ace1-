@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 432149280285148134}
   - component: {fileID: 3194284932204874894}
   - component: {fileID: 4044045061459109912}
-  - component: {fileID: 1198950909465770457}
+  - component: {fileID: 65852164736800034}
   m_Layer: 0
   m_Name: EditCube
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &1198950909465770457
+--- !u!65 &65852164736800034
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
