@@ -12,15 +12,19 @@ public class GridManager : MonoBehaviour
     Factory _blockFactory;
 
     public Action CallbackLineClear;
-    public Action CallbackBlocksInput;
+    public Action CallbackShapeInput;
     public Action CallbackGameOver;
 
-    int _grid_MaxX = 10;
-    int _grid_MaxY = 20;
-    int _grid_MaxZ = 10;
+    int _grid_MaxX;
+    int _grid_MaxY;
+    int _grid_MaxZ;
 
     void Awake()
     {
+        _grid_MaxX = GameManager._grid_MaxX;
+        _grid_MaxY = GameManager._grid_MaxY;
+        _grid_MaxZ = GameManager._grid_MaxZ;
+
         _grid = new GameObject[_grid_MaxX, _grid_MaxY, _grid_MaxZ];
     }
 
@@ -113,7 +117,7 @@ public class GridManager : MonoBehaviour
         }
 
         LineClear(blocks);
-        CallbackBlocksInput?.Invoke();
+        CallbackShapeInput?.Invoke();
     }
 
     public void OnGameOver()

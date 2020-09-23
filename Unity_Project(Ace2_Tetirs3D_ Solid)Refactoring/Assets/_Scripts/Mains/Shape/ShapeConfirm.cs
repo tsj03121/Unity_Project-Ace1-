@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class ShapeConfirm
 {
-    ShapePosData[] _shapeTypes;
+    List<ShapePosData> _shapeTypes = new List<ShapePosData>();
 
-    public ShapePosData[] GetShapeTypes() { return _shapeTypes; }
+    public List<ShapePosData> GetShapeTypes() { return _shapeTypes; }
 
-    public Vector3 GetBasicCreatePos() { return new Vector3(5, 19, 5); }
-
-    public ShapeConfirm()
+    public ShapeConfirm(List<ShapePosData> shapePosDatas)
     {
-        _shapeTypes = Resources.LoadAll<ShapePosData>("");
+        _shapeTypes = shapePosDatas;
     }
 
     public Vector3[] GetShapePos(int shapeIndex)

@@ -31,6 +31,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     UIManager _uIManager;
 
+    public static int _grid_MaxX = 10;
+    public static int _grid_MaxY = 20;
+    public static int _grid_MaxZ = 10;
+    public static Vector3 _basicPos = new Vector3(5, 19, 5);
+
     void Awake()
     { 
         _blockFactory = new Factory(_prefab);
@@ -43,8 +48,8 @@ public class GameManager : MonoBehaviour
 
     void BindEvents()
     {
-        _gridManager.CallbackBlocksInput += _cameraManager.OnBlocksInput;
-        _gridManager.CallbackBlocksInput += _shapeManager.OnBlocksInput;
+        _gridManager.CallbackShapeInput += _cameraManager.OnShapeInput;
+        _gridManager.CallbackShapeInput += _shapeManager.OnShapeInput;
         _gridManager.CallbackLineClear += _scoreManager.OnLineClear;
 
         _shapeManager.CallbackCreateBlock += _cameraManager.OnCreateBlock;

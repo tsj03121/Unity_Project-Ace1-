@@ -78,7 +78,9 @@
     <Compile Include="Assets\_Scripts\Mains\Shape\ShapeConfirm.cs" />
     <Compile Include="Assets\_Scripts\Mains\UI\LobbyGameStart.cs" />
     <Compile Include="Assets\_Scripts\Mains\UI\NextShapeRotation.cs" />
-    <Compile Include="Assets\_Scripts\ShapePosData.cs" />
+    <Compile Include="Assets\_Scripts\Public\DataManager.cs" />
+    <Compile Include="Assets\_Scripts\Public\ShapeData.cs" />
+    <Compile Include="Assets\_Scripts\Public\ShapePosData.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/ace-noone/Unity/Unity_Project(Ace1)/Unity_Project(Ace2_Tetirs3D_ Solid)Refactoring/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

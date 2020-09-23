@@ -1,12 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class CameraManager : MonoBehaviour
 {
-
-
     [SerializeField]
     GameObject _shapeListParent;
 
@@ -18,13 +15,16 @@ public class CameraManager : MonoBehaviour
 
     void Awake()
     {
-        int count = 0;
-        NextShapeRotation[] shapes = Resources.LoadAll<NextShapeRotation>("Shapes");
-        _shapes = new GameObject[shapes.Length];
+        DataManager dataManager = DataManager.GetInstance();
+        ShapeData shapeData = dataManager.GetShapeData();
 
-        for (int i = 0; i < shapes.Length; i++)
+        int count = 0;
+        List<GameObject> shapes = shapeData.GetNextShapesView();
+        _shapes = new GameObject[shapes.Count];
+
+        for (int i = 0; i < shapes.Count; i++)
         {
-            GameObject viewShape = Instantiate(shapes[i].gameObject);
+            GameObject viewShape = Instantiate(shapes[i]);
             _shapes[count] = viewShape;
 
             Vector3 localPos = viewShape.transform.position;
@@ -46,7 +46,7 @@ public class CameraManager : MonoBehaviour
         _currNextShape.gameObject.SetActive(true);      
     }
 
-    public void OnBlocksInput()
+    public void OnShapeInput()
     {
         _currNextShape.gameObject.SetActive(false);
     }

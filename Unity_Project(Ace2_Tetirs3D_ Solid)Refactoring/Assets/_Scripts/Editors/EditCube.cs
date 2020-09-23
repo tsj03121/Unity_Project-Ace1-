@@ -14,47 +14,47 @@ public class EditCube : MonoBehaviour
     GameObject _cube;
 
     [SerializeField]
+    GameObject _center;
+
+    [SerializeField]
     GameObject _parentCube;
 
     [SerializeField]
-    List<GameObject> _newShapePos = new List<GameObject>();
+    List<GameObject> _newBlock = new List<GameObject>();
+
+    DataManager _dataManager;
 
     string _cubeName = "Temp";
-
-    void Start()
-    {
-        _material.color = Color.white;
-    }
 
     void AllPosMove(Vector3 vector3)
     {
         _parentCube.transform.position += vector3;
+        _center.transform.position = _parentCube.transform.position;
     }
 
     void ShapesMaterialSetting(Material material)
     {
-        for (int i = 0; i < _newShapePos.Count; i++)
+        for (int i = 0; i < _newBlock.Count; i++)
         {
-            _newShapePos[i].GetComponent<MeshRenderer>().material = material;
+            _newBlock[i].GetComponent<MeshRenderer>().material = material;
         }
     }
 
-    //기준점을 기준으로 크기가 얼마나 큰지 측정 후 스케일 조정
     void ShapesScaleSetting()
     {
         int x = 0;
         int y = 0;
 
-        for (int i = 0; i < _newShapePos.Count; i++)
+        for (int i = 0; i < _newBlock.Count; i++)
         {
-            if (x < Mathf.Abs((int) _newShapePos[i].transform.localPosition.x))
+            if (x < Mathf.Abs((int)_newBlock[i].transform.localPosition.x))
             {
-                x = Mathf.Abs((int)_newShapePos[i].transform.localPosition.x);
+                x = Mathf.Abs((int)_newBlock[i].transform.localPosition.x);
             }
 
-            if (y < Mathf.Abs((int) _newShapePos[i].transform.localPosition.y))
+            if (y < Mathf.Abs((int)_newBlock[i].transform.localPosition.y))
             {
-                y = Mathf.Abs((int)_newShapePos[i].transform.localPosition.y);
+                y = Mathf.Abs((int)_newBlock[i].transform.localPosition.y);
             }                
         }
 
@@ -68,36 +68,25 @@ public class EditCube : MonoBehaviour
         }
     }
 
+    void GotoLobbyScene()
+    {
+        SceneManager.LoadScene("Lobby");
+    }
+
     void SetScaleChange(int value)
     {
-        switch (value)
+        float scaleSize = 0.9f;
+        if (value != 0)
         {
-            case 1:
-                {
-                    _parentCube.transform.localScale = Vector3.one * 0.5f;
-                    break;
-                }
-            case 2:
-                {
-                    _parentCube.transform.localScale = Vector3.one * 0.3f;
-                    break;
-                }
-            case 3:
-                {
-                    _parentCube.transform.localScale = Vector3.one * 0.2f;
-                    break;
-                }
-            case 4:
-                {
-                    _parentCube.transform.localScale = Vector3.one * 0.15f;
-                    break;
-                }
-            default:
-                {
-                    _parentCube.transform.localScale = Vector3.one * 1.5f;
-                    break;
-                }
+            scaleSize = 0.6f  - (0.1f * value);
         }
+        _parentCube.transform.localScale = Vector3.one * scaleSize;
+    }
+
+    public void Init(DataManager dataManager)
+    {
+        _dataManager = dataManager;
+        _material.color = Color.white;
     }
 
     public void OnCreateClick(Vector3 vector3)
@@ -107,7 +96,7 @@ public class EditCube : MonoBehaviour
         newCube.transform.position = vector3;
         newCube.GetComponent<MeshRenderer>().material = _material;
 
-        _newShapePos.Add(newCube);
+        _newBlock.Add(newCube);
 
         if (newCube.transform.position.y > 0)
         {
@@ -120,14 +109,14 @@ public class EditCube : MonoBehaviour
         if (gameObject == _parentCube)
             return;
 
-        int index = _newShapePos.IndexOf(gameObject);
-        _newShapePos.RemoveAt(index);
+        int index = _newBlock.IndexOf(gameObject);
+        _newBlock.RemoveAt(index);
         Destroy(gameObject);
 
         int height = 0;
-        for (int i = 0; i < _newShapePos.Count; i++)
+        for (int i = 0; i < _newBlock.Count; i++)
         {
-            float y = _newShapePos[i].transform.localPosition.y;
+            float y = _newBlock[i].transform.localPosition.y;
 
             if (height < y)
             {
@@ -163,16 +152,16 @@ public class EditCube : MonoBehaviour
         _material.color = color;
     }
 
-    public void OnSaveNameChange(Text text)
+    public void OnSaveNameChange(string text)
     {
-        _cubeName = text.text;
+        _cubeName = text;
     }
 
     public bool OnGetCubeLocalPosCheck(int value)
     {
-        for (int i = 0; i < _newShapePos.Count; i++)
+        for (int i = 0; i < _newBlock.Count; i++)
         {
-            if (_newShapePos[i].transform.localPosition.y >= 4)
+            if (_newBlock[i].transform.localPosition.y >= 4)
                 return false;
         }
 
@@ -181,14 +170,14 @@ public class EditCube : MonoBehaviour
 
     public void OnSave()
     {
-        _newShapePos.Add(_parentCube);
+        _newBlock.Add(_parentCube);
 
-        ShapePosData shapePosData = new ShapePosData();
-        Vector3[] vector3s = new Vector3[_newShapePos.Count];
+        ShapePosData shapePosData = ScriptableObject.CreateInstance<ShapePosData>();
+        Vector3[] vector3s = new Vector3[_newBlock.Count];
 
-        for (int i = 0; i < _newShapePos.Count; i++)
+        for (int i = 0; i < _newBlock.Count; i++)
         {
-            vector3s[i] = _newShapePos[i].transform.position;
+            vector3s[i] = _newBlock[i].transform.position;
         }
         shapePosData.SetVector3s(vector3s);
 
@@ -197,7 +186,7 @@ public class EditCube : MonoBehaviour
 
         ShapesMaterialSetting(material);
 
-        _newShapePos.Remove(_parentCube);
+        _newBlock.Remove(_parentCube);
         ShapesScaleSetting();
 
         _parentCube.transform.position = new Vector3(0.64f, 0f, 0.88f);
@@ -207,8 +196,47 @@ public class EditCube : MonoBehaviour
             _cubeName = "Temp";
 
         AssetDatabase.CreateAsset(material, "Assets/Resources/ShapeMaterials/" + _cubeName + ".mat");
-        AssetDatabase.CreateAsset(shapePosData, "Assets/Resources/ShapePosData/" + _cubeName + ".asset");
+        AssetDatabase.CreateAsset(shapePosData, "Assets/Resources/ShapePosDatas/" + _cubeName + ".asset");
         PrefabUtility.SaveAsPrefabAssetAndConnect(_parentCube, "Assets/Resources/Shapes/" + _cubeName + ".prefab" , InteractionMode.UserAction);
-        SceneManager.LoadScene("Lobby");
+        NextShapeRotation nextShapeView = Resources.Load<NextShapeRotation>("Shapes/" + _cubeName);
+
+        ShapeData shapeData = _dataManager.GetShapeData();
+        int checkIndex = shapeData.GetNextShapesView().IndexOf(nextShapeView.gameObject);
+        if (checkIndex == -1)
+        {
+            shapeData.AddShapeMaterial(material);
+            shapeData.AddShapePosData(shapePosData);
+            shapeData.AddNextShapesView(nextShapeView.gameObject);
+        }
+        else
+        {
+            shapeData.UpdateShapeMaterial(checkIndex, material);
+            shapeData.UpdateShapePosData(checkIndex, shapePosData);
+        }
+
+        Invoke("GotoLobbyScene", 0.1f);
+    }
+
+    public void OnLoadListSelect(ShapePosData shapePosData, Material material)
+    {
+        _material.color = material.color;
+
+        Vector3[] vector3s = shapePosData.GetVector3s();
+
+        _parentCube.transform.position += vector3s[vector3s.Length - 1];
+
+        for (int i = 0; i < vector3s.Length - 1; i++)
+        {
+            OnCreateClick(vector3s[i]);
+        }
+    }
+
+    public void OnReset()
+    {
+        for (int i = _newBlock.Count - 1; i >= 0; i--)
+        {
+            OnDeleteClick(_newBlock[i]);
+        }
+        _material.color = Color.white;
     }
 }

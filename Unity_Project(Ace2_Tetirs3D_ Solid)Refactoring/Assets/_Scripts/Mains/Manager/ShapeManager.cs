@@ -12,7 +12,7 @@ public class ShapeManager : MonoBehaviour
     GridManager _gridManager;
 
     [SerializeField]
-    Material[] _materials;
+    List<Material> _materials;
 
     public Action<int> CallbackCreateBlock;
 
@@ -30,11 +30,17 @@ public class ShapeManager : MonoBehaviour
     [SerializeField]
     ShapeConfirm _shapeConfirm;
 
+    Vector3 _basicPos;
+
     // Start is called before the first frame update
     void Awake()
     {
-        _materials = Resources.LoadAll<Material>("ShapeMaterials");
-        _shapeConfirm = new ShapeConfirm();
+        DataManager dataManager = DataManager.GetInstance();
+        ShapeData shapeData = dataManager.GetShapeData();
+        _materials = shapeData.GetShapesMaterials();
+        _basicPos = GameManager._basicPos;
+
+        _shapeConfirm = new ShapeConfirm(shapeData.GetShapesPosDatas());
     }
 
     void Start()
@@ -53,7 +59,7 @@ public class ShapeManager : MonoBehaviour
 
     void ShapeTypeSetting()
     {
-        int count = _shapeConfirm.GetShapeTypes().Length;
+        int count = _shapeConfirm.GetShapeTypes().Count;
         for (int i = 0; i < count; i++)
         {
             _shapeTypes.Add(i);
@@ -68,7 +74,7 @@ public class ShapeManager : MonoBehaviour
         BindEvents();
     }
 
-    public void OnBlocksInput()
+    public void OnShapeInput()
     {
         _currBlocks.RemoveRange(0, _currBlocks.Count);
 
@@ -106,7 +112,7 @@ public class ShapeManager : MonoBehaviour
         _shapeTypes.RemoveAt(randomNum);
 
         Vector3[] vector3s = _shapeConfirm.GetShapePos(shapeIndex);
-        Vector3 basicPos = _shapeConfirm.GetBasicCreatePos();
+        Vector3 basicPos = _basicPos;
 
         for (int i = 0; i < vector3s.Length; ++i)
         {

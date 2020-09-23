@@ -23,14 +23,29 @@ public class EditorController : MonoBehaviour
     bool _isDeleteCube = false;
     bool _isMouseDrag = false;
 
+    int _limit_X;
+    int _limit_Y;
+    int _limit_Z;
+
+    void Start()
+    {
+        _limit_X = GameManager._grid_MaxX / 2;
+        _limit_Y = GameManager._grid_MaxZ / 2;
+        _limit_Z = GameManager._grid_MaxY - 1;
+    }
+
     // Update is called once per frame
     void Update()
     {
         float cameraForward = Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * 50f;
-        if (cameraForward != 0)
+        if (cameraForward != 0 && transform.localPosition.z <= -1)
         {
             Vector3 cameraPos = transform.localPosition;
             cameraPos.z += cameraForward;
+            if (cameraPos.z >= -1)
+            {
+                cameraPos.z = -1;
+            }
             transform.localPosition = cameraPos;
         }
 
@@ -48,14 +63,13 @@ public class EditorController : MonoBehaviour
                                                   _hit.transform.position.y + _hit.normal.y,
                                                   _hit.transform.position.z + _hit.normal.z);
 
-                    Debug.Log(vector3.y);
-
+                    //기준점을 기준으로 생성되는 새로운 블럭의 위치가 최대 길이를 넘는지 확인한다.
                     bool isCreateCheck = false;
 
-                    if (vector3.x <= -5 || vector3.x >= 5)
+                    if (vector3.x <= -_limit_X || vector3.x >= _limit_X)
                         return;
 
-                    if (vector3.z <= -5 || vector3.z >= 5)
+                    if (vector3.z <= -_limit_Z || vector3.z >= _limit_Z)
                         return;
 
                     if (vector3.y == 1)
@@ -64,14 +78,25 @@ public class EditorController : MonoBehaviour
                         if (!isCreateCheck)
                             return;
                     }
-                    else if (vector3.y <= -9)
+                    else if (vector3.y <= -_limit_Y)
                     {
                         return;
                     }
                                         
                     CallbackCreateClick(vector3);
                 }
-                else if (_isDeleteCube)
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out _hit, _maxDistance))
+            {
+                if (_hit.transform.gameObject == null)
+                    return;
+
+                if (_isDeleteCube)
                 {
                     CallbackDeleteClick(_hit.transform.gameObject);
                 }
@@ -102,14 +127,12 @@ public class EditorController : MonoBehaviour
     public bool OnCreateCube()
     {
         _isCreateCube = !_isCreateCube;
-        _isDeleteCube = false;
         return _isCreateCube;
     }
 
     public bool OnDeleteCube()
     {
         _isDeleteCube = !_isDeleteCube;
-        _isCreateCube = false;
         return _isDeleteCube;
     }
 }

@@ -18,7 +18,7 @@ public class Factory
     {
         for(int i = 0; i < _defaultPoolSize; ++i)
         {
-            GameObject obj = GameObject.Instantiate(_prefab) as GameObject;
+            GameObject obj = GameObject.Instantiate(_prefab);
             obj.gameObject.SetActive(false);
             _pool.Add(obj);
         }

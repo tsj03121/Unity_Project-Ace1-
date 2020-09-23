@@ -22,16 +22,39 @@ public class EditorManager : MonoBehaviour
     [SerializeField]
     Text[] isChecks;
 
+    [SerializeField]
+    Dropdown _dropdown;
+
+    [SerializeField]
+    InputField _saveText;
+
+    [SerializeField]
+    Slider[] sliders;
+
     public Action CallbackSave;
-    public Action<Text> CallbackSaveNameChange;
+    public Action CallbackReset;
+    public Action<string> CallbackSaveNameChange;
     public Action<Slider> CallbackSliderChange;
+    public Action<ShapePosData, Material> CallbackLoadListSelect;
 
     public Func<bool> CallbackCreateCube;
     public Func<bool> CallbackDeleteCube;
 
     bool _panelView = false;
+    ShapeData _shapeData;
 
     void Start()
+    {
+        BindEvents();
+        DataManager dataManager = DataManager.GetInstance();
+        _cubeEdit.Init(dataManager);
+
+        _shapeData = dataManager.GetShapeData();
+        List<ShapePosData> posDatas = _shapeData.GetShapesPosDatas();
+        DropdownOptionReset(posDatas);
+    }
+
+    void BindEvents()
     {
         _editorController.CallbackCreateClick += _cubeEdit.OnCreateClick;
         _editorController.CallbackDeleteClick += _cubeEdit.OnDeleteClick;
@@ -39,18 +62,33 @@ public class EditorManager : MonoBehaviour
 
         CallbackCreateCube += _editorController.OnCreateCube;
         CallbackDeleteCube += _editorController.OnDeleteCube;
+        CallbackLoadListSelect += _cubeEdit.OnLoadListSelect;
+        CallbackReset += _cubeEdit.OnReset;
 
         CallbackSliderChange += _cubeEdit.OnSliderChange;
         CallbackSaveNameChange += _cubeEdit.OnSaveNameChange;
         CallbackSave += _cubeEdit.OnSave;
     }
 
-    void IsChecksTextReset()
+    void DropdownOptionReset(List<ShapePosData> posDatas)
     {
-        for (int i = 0; i < isChecks.Length; i++)
+        List<Dropdown.OptionData> optionDatas = new List<Dropdown.OptionData>();
+
+        for (int i = 0; i < posDatas.Count; i++)
         {
-            isChecks[i].text = "False";
+            Dropdown.OptionData optionData = new Dropdown.OptionData();
+            optionData.text = posDatas[i].name.ToString();
+            optionDatas.Add(optionData);
         }
+
+        _dropdown.AddOptions(optionDatas);
+    }
+
+    void LoadListSelectRGBSlider(Color color)
+    {
+        sliders[0].value = color.r;
+        sliders[1].value = color.g;
+        sliders[2].value = color.b;
     }
 
     public void OnClickPanelView()
@@ -75,7 +113,7 @@ public class EditorManager : MonoBehaviour
 
     public void SaveNameChange(Text text)
     {
-        CallbackSaveNameChange?.Invoke(text);
+        CallbackSaveNameChange?.Invoke(text.text);
     }
 
     public void OnClickSave()
@@ -90,15 +128,34 @@ public class EditorManager : MonoBehaviour
 
     public void OnClickCubeCreate(Text text)
     {
-        IsChecksTextReset();
         bool isCreateCube = (bool) CallbackCreateCube?.Invoke();
         text.text = isCreateCube.ToString();
     }
 
     public void OnClickCubeDelete(Text text)
     {
-        IsChecksTextReset();
         bool isDeleteCube = (bool) CallbackDeleteCube?.Invoke();
         text.text = isDeleteCube.ToString();
+    }
+
+    public void LoadListSelect()
+    {
+        LoadListSelectRGBSlider(Color.white);
+        CallbackReset?.Invoke();
+
+        if (_dropdown.value == 0)
+            return;
+
+        int selectIndex = _dropdown.value - 1;
+
+        _saveText.text = _dropdown.options[_dropdown.value].text;
+
+        ShapePosData shapePosData = _shapeData.GetShapesPosDatas()[selectIndex];
+        Material material = _shapeData.GetShapesMaterials()[selectIndex];
+
+        LoadListSelectRGBSlider(material.color);
+
+        CallbackSaveNameChange?.Invoke(_saveText.text);
+        CallbackLoadListSelect?.Invoke(shapePosData, material);
     }
 }

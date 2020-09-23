@@ -16,16 +16,18 @@ public class Shape : MonoBehaviour
         Z_ROT
     }
 
+    public Coroutine _downCoroutine;
+
     public Func<List<GameObject>, bool> CallbackNextPosDown;
     public Func<List<GameObject>, Vector3, bool> CallbackNextPosMove;
     public Func<Vector3[], bool> CallbackNextRotMove;
     public Action<List<GameObject>> CallbackBlocksGridInput;
 
     ShapeConfirm _shapeConfirm;
-    Coroutine _downCoroutine;
 
     IEnumerator Down(float dropSpeed)
     {
+        yield return new WaitForSeconds(dropSpeed);
         bool isDown = true;
         while (isDown)
         {
@@ -211,7 +213,7 @@ public class Shape : MonoBehaviour
             case (Controller.KEY_CODE.LEFT_CONTROL_DOWN):
                 {
                     StopCoroutine(_downCoroutine);
-                    _downCoroutine = StartCoroutine(Down(0.05f));
+                    _downCoroutine = StartCoroutine(Down(0.1f));
                     break;
                 }
 
