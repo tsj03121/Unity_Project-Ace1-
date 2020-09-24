@@ -1,0 +1,29 @@
+﻿<Properties StartupConfiguration="{30F21A9C-318D-67AA-3800-75D25E128042}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_Scripts/Public/BuildAsssetBundles.cs">
+    <Files>
+      <File FileName="Assets/_Scripts/Public/BuildAsssetBundles.cs" Line="22" Column="6" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Unity_Project(Ace2_Tetirs3D_Solid)Refactoring" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="_Scripts" expanded="True">
+                <Node name="Public" expanded="True">
+                  <Node name="BuildAsssetBundles.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="de2f02bd-11f6-4dc9-ae4a-2740d070bb3a" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
